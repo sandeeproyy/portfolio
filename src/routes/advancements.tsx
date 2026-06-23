@@ -1,12 +1,20 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { advancements, type AdvancementNode } from "@/data/timeline";
+import { useUIStore } from "@/lib/ui-store";
+
+// Recruiter Mode imports
+import { SectionContainer } from "@/components/layout/SectionContainer";
 
 export const Route = createFileRoute("/advancements")({
   head: () => ({
     meta: [
       { title: "Advancements — Sandeep Roy" },
-      { name: "description", content: "Education and experience as an advancement tree: Foundations → Mechanical → Robotics → AI/ML." },
+      {
+        name: "description",
+        content:
+          "Education and experience as an advancement tree: Foundations → Mechanical → Robotics → AI/ML.",
+      },
       { property: "og:title", content: "Advancements — Sandeep Roy" },
       { property: "og:description", content: "Timeline of education and projects." },
     ],
@@ -21,7 +29,38 @@ const BRANCH_COLOR: Record<AdvancementNode["branch"], string> = {
   ai: "#3ed47a",
 };
 
-function AdvancementsPage() {
+function RecruiterAdvancementsPage() {
+  return (
+    <SectionContainer className="pt-24 flex items-center justify-center min-h-[60vh]">
+      <div className="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl max-w-md text-center space-y-4 shadow-xl">
+        <h2 className="text-xl font-bold text-white tracking-tight">
+          Interactive Advancement Tree
+        </h2>
+        <p className="text-zinc-400 text-sm leading-relaxed">
+          The scrollable 2D node map connecting my projects is part of <strong>Game Mode</strong>.
+          For professional review, please use the Certifications and Education logs on the
+          Experience page.
+        </p>
+        <div className="pt-2 flex flex-col gap-2">
+          <Link
+            to="/experience"
+            className="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold tracking-wide transition-colors cursor-pointer text-center block"
+          >
+            Open Experience & Certs
+          </Link>
+          <button
+            onClick={() => useUIStore.getState().setViewMode("game")}
+            className="w-full py-2 border border-zinc-700 hover:border-zinc-500 text-zinc-300 rounded-lg text-xs font-semibold tracking-wide transition-colors cursor-pointer"
+          >
+            Switch to Game Mode
+          </button>
+        </div>
+      </div>
+    </SectionContainer>
+  );
+}
+
+function GameAdvancementsPage() {
   const [unlocked, setUnlocked] = useState<Set<string>>(new Set());
   const [selected, setSelected] = useState<AdvancementNode | null>(null);
   const nodeRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -35,7 +74,7 @@ function AdvancementsPage() {
           return next;
         });
       },
-      { threshold: 0.4 }
+      { threshold: 0.4 },
     );
     Object.values(nodeRefs.current).forEach((el) => el && io.observe(el));
     return () => io.disconnect();
@@ -49,11 +88,15 @@ function AdvancementsPage() {
   const H = ROWS * CELL;
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-10">
+    <main className="mx-auto max-w-6xl px-4 py-10 font-mono">
       <header className="mb-6">
-        <div className="font-display text-[10px] text-grass text-shadow-pixel">ADVANCEMENT TREE</div>
-        <h1 className="mt-2 font-display text-2xl md:text-3xl text-on-dark text-shadow-pixel">Education & Experience</h1>
-        <p className="mt-3 max-w-2xl text-on-dark/85" style={{ fontFamily: "var(--font-hud)", fontSize: 18 }}>
+        <div className="font-display text-[10px] text-grass text-shadow-pixel">
+          ADVANCEMENT TREE
+        </div>
+        <h1 className="mt-2 font-display text-2xl md:text-3xl text-on-dark text-shadow-pixel">
+          Education & Experience
+        </h1>
+        <p className="mt-3 max-w-2xl text-on-dark/85" style={{ fontSize: 16 }}>
           Scroll to unlock nodes. Click a node to read the lore.
         </p>
       </header>
@@ -74,13 +117,16 @@ function AdvancementsPage() {
                 return (
                   <line
                     key={`${pid}-${n.id}`}
-                    x1={x1} y1={y1} x2={x2} y2={y2}
+                    x1={x1}
+                    y1={y1}
+                    x2={x2}
+                    y2={y2}
                     stroke={active ? BRANCH_COLOR[n.branch] : "rgba(255,255,255,0.18)"}
                     strokeWidth="3"
                     strokeDasharray="6 6"
                   />
                 );
-              })
+              }),
             )}
           </svg>
 
@@ -136,12 +182,19 @@ function AdvancementsPage() {
             className="pixel-border pixel-bevel bg-obsidian/95 max-w-md w-full p-5"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="font-display text-[10px] text-shadow-pixel" style={{ color: BRANCH_COLOR[selected.branch] }}>
+            <div
+              className="font-display text-[10px] text-shadow-pixel"
+              style={{ color: BRANCH_COLOR[selected.branch] }}
+            >
               {selected.branch.toUpperCase()} · {selected.kind.toUpperCase()}
             </div>
-            <h2 className="mt-2 font-display text-lg text-on-dark text-shadow-pixel">{selected.title}</h2>
-            <div className="mt-1 text-stone" style={{ fontFamily: "var(--font-hud)", fontSize: 16 }}>{selected.date}</div>
-            <p className="mt-3 text-on-dark/90 leading-relaxed" style={{ fontFamily: "var(--font-hud)", fontSize: 18 }}>
+            <h2 className="mt-2 font-display text-lg text-on-dark text-shadow-pixel">
+              {selected.title}
+            </h2>
+            <div className="mt-1 text-stone" style={{ fontSize: 14 }}>
+              {selected.date}
+            </div>
+            <p className="mt-3 text-on-dark/90 leading-relaxed font-mono" style={{ fontSize: 14 }}>
               {selected.description}
             </p>
             <button
@@ -157,9 +210,21 @@ function AdvancementsPage() {
       {/* SR fallback list */}
       <ol className="sr-only">
         {advancements.map((a) => (
-          <li key={a.id}>{a.title} — {a.date} — {a.description}</li>
+          <li key={a.id}>
+            {a.title} — {a.date} — {a.description}
+          </li>
         ))}
       </ol>
     </main>
   );
+}
+
+function AdvancementsPage() {
+  const { viewMode } = useUIStore();
+
+  if (viewMode === "simple") {
+    return <RecruiterAdvancementsPage />;
+  }
+
+  return <GameAdvancementsPage />;
 }

@@ -15,7 +15,10 @@ export function ItemTooltip({ title, subtitle, enchants, children }: Props) {
         <div className="pixel-border bg-obsidian/95 px-3 py-2 min-w-[180px] text-left">
           <div className="font-display text-[10px] text-white text-shadow-pixel">{title}</div>
           {subtitle && (
-            <div className="font-hud text-stone text-sm mt-1" style={{ fontFamily: "var(--font-hud)" }}>
+            <div
+              className="font-hud text-stone text-sm mt-1"
+              style={{ fontFamily: "var(--font-hud)" }}
+            >
               {subtitle}
             </div>
           )}
@@ -23,7 +26,8 @@ export function ItemTooltip({ title, subtitle, enchants, children }: Props) {
             <div className="mt-1 space-y-0.5" style={{ fontFamily: "var(--font-hud)" }}>
               {enchants.map((e) => (
                 <div key={e.name} className="text-diamond text-sm">
-                  {e.name}{e.level ? ` ${e.level}` : ""}
+                  {e.name}
+                  {e.level ? ` ${e.level}` : ""}
                 </div>
               ))}
             </div>

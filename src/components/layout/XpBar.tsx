@@ -18,18 +18,13 @@ export function XpBar() {
   }, []);
   const level = Math.floor(pct / 10);
   return (
-    <div
-      className="fixed left-0 right-0 bottom-0 z-30 pointer-events-none"
-      aria-hidden
-    >
+    <div className="fixed left-0 right-0 bottom-0 z-30 pointer-events-none" aria-hidden>
       <div className="relative h-3 bg-black/70">
         <div
           className="absolute inset-y-0 left-0 bg-xp"
           style={{ width: `${pct}%`, boxShadow: "0 0 12px var(--xp)" }}
         />
-        <div
-          className="absolute right-2 -top-4 font-display text-[10px] text-xp text-shadow-pixel"
-        >
+        <div className="absolute right-2 -top-4 font-display text-[10px] text-xp text-shadow-pixel">
           LVL {level}
         </div>
       </div>

@@ -17,7 +17,7 @@ const HOTBAR_SLOTS = [
 ] as const;
 
 export function Hotbar() {
-  const { activeHotbarSlot, setActiveHotbarSlot, toggleConsole } = useUIStore();
+  const { activeHotbarSlot, setActiveHotbarSlot, toggleConsole, viewMode } = useUIStore();
   const router = useRouter();
   const location = useLocation();
 
@@ -33,6 +33,8 @@ export function Hotbar() {
   // Keyboard navigation (1-9 to select slot)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (viewMode === "simple") return;
+
       // Don't hijack if typing in an input/textarea
       if (
         document.activeElement?.tagName === "INPUT" ||
@@ -40,7 +42,7 @@ export function Hotbar() {
       ) {
         return;
       }
-      
+
       const key = parseInt(e.key);
       if (key >= 1 && key <= 9) {
         const slotIdx = key - 1;
@@ -64,17 +66,17 @@ export function Hotbar() {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [router, setActiveHotbarSlot, toggleConsole]);
+  }, [router, setActiveHotbarSlot, toggleConsole, viewMode]);
 
   return (
     <div className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2">
       {/* Label showing current hovered/active item */}
       <div className="mb-2 text-center h-5">
-         <span className="font-display text-[10px] text-shadow-pixel text-on-dark drop-shadow-md transition-all duration-200">
-           {HOTBAR_SLOTS[activeHotbarSlot]?.label}
-         </span>
+        <span className="font-display text-[10px] text-shadow-pixel text-on-dark drop-shadow-md transition-all duration-200">
+          {HOTBAR_SLOTS[activeHotbarSlot]?.label}
+        </span>
       </div>
-      
+
       <div className="flex h-12 md:h-14 bg-obsidian/95 p-1 pixel-border pixel-bevel shadow-2xl gap-1">
         {HOTBAR_SLOTS.map((slot, i) => {
           const isActive = activeHotbarSlot === i;
@@ -91,11 +93,15 @@ export function Hotbar() {
                   router.navigate({ to: slot.path });
                 }
               }}
-              style={isActive && slot.color ? {
-                boxShadow: `inset 0 0 10px ${slot.color}60, 0 0 8px ${slot.color}35`,
-                borderColor: slot.color,
-                backgroundColor: `${slot.color}15`,
-              } : {}}
+              style={
+                isActive && slot.color
+                  ? {
+                      boxShadow: `inset 0 0 10px ${slot.color}60, 0 0 8px ${slot.color}35`,
+                      borderColor: slot.color,
+                      backgroundColor: `${slot.color}15`,
+                    }
+                  : {}
+              }
               className={`group relative flex aspect-square h-full items-center justify-center p-1 md:p-1.5 border-2 border-transparent
                 ${isActive ? "pixel-bevel" : "hover:bg-white/5"}
                 transition-all duration-200`}
@@ -103,10 +109,10 @@ export function Hotbar() {
             >
               {/* Item Icon */}
               {Icon ? (
-                <Icon 
-                  size={20} 
+                <Icon
+                  size={20}
                   className={`transition-all duration-300 stroke-[2.5]
-                    ${isActive ? 'scale-115 rotate-[4deg]' : 'group-hover:scale-110 group-hover:-translate-y-0.5'}
+                    ${isActive ? "scale-115 rotate-[4deg]" : "group-hover:scale-110 group-hover:-translate-y-0.5"}
                   `}
                   style={{
                     color: isActive ? slot.color : "oklch(0.75 0.015 250 / 0.7)",
@@ -116,7 +122,10 @@ export function Hotbar() {
               ) : null}
 
               {/* Slot number hint */}
-              <span className="absolute bottom-0.5 right-1 font-hud text-[9px] text-on-dark-muted/30 pointer-events-none" style={{ fontFamily: "var(--font-hud)" }}>
+              <span
+                className="absolute bottom-0.5 right-1 font-hud text-[9px] text-on-dark-muted/30 pointer-events-none"
+                style={{ fontFamily: "var(--font-hud)" }}
+              >
                 {i + 1}
               </span>
             </button>

@@ -16,7 +16,10 @@ const HELP = [
   "/help              — list commands",
 ];
 
-const ROUTES: Record<string, "/" | "/builds" | "/crafting" | "/advancements" | "/skills" | "/experience" | "/portal"> = {
+const ROUTES: Record<
+  string,
+  "/" | "/builds" | "/crafting" | "/advancements" | "/skills" | "/experience" | "/portal"
+> = {
   spawn: "/",
   home: "/",
   builds: "/builds",
@@ -36,9 +39,7 @@ export function CommandConsole() {
   const { consoleOpen, setConsoleOpen, triggerToast } = useUIStore();
   const navigate = useNavigate();
   const [value, setValue] = useState("");
-  const [log, setLog] = useState<string[]>([
-    "[op] Sandeep Roy console v1.0 — type /help",
-  ]);
+  const [log, setLog] = useState<string[]>(["[op] Sandeep Roy console v1.0 — type /help"]);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -116,10 +117,10 @@ export function CommandConsole() {
                 line.startsWith("[err]")
                   ? "text-redstone"
                   : line.startsWith("[op]")
-                  ? "text-grass"
-                  : line.startsWith(">")
-                  ? "text-diamond"
-                  : "text-on-dark/85"
+                    ? "text-grass"
+                    : line.startsWith(">")
+                      ? "text-diamond"
+                      : "text-on-dark/85"
               }
             >
               {line}

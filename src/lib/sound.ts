@@ -4,7 +4,10 @@ let audioCtx: AudioContext | null = null;
 
 function getAudioContext(): AudioContext {
   if (!audioCtx) {
-    audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    audioCtx = new (
+      window.AudioContext ||
+      (window as Window & { webkitAudioContext?: new () => AudioContext }).webkitAudioContext
+    )();
   }
   if (audioCtx.state === "suspended") {
     audioCtx.resume();
@@ -34,10 +37,9 @@ export function playSound(type: "click" | "levelup" | "portal") {
       gain.gain.linearRampToValueAtTime(0.001, now + 0.05);
       osc.start(now);
       osc.stop(now + 0.05);
-    } 
-    else if (type === "levelup") {
+    } else if (type === "levelup") {
       // XP Level up arpeggio: G4 -> B4 -> D5 -> G5
-      const notes = [392.00, 493.88, 587.33, 783.99];
+      const notes = [392.0, 493.88, 587.33, 783.99];
       notes.forEach((freq, index) => {
         const time = now + index * 0.07;
         const osc = ctx.createOscillator();
@@ -51,8 +53,7 @@ export function playSound(type: "click" | "levelup" | "portal") {
         osc.start(time);
         osc.stop(time + 0.4);
       });
-    } 
-    else if (type === "portal") {
+    } else if (type === "portal") {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.connect(gain);

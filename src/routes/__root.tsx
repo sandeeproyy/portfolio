@@ -14,6 +14,9 @@ import { Hotbar } from "../components/layout/Hotbar";
 import { CommandConsole } from "../components/layout/CommandConsole";
 import { XpBar } from "../components/layout/XpBar";
 import { AdvancementsToast } from "../components/layout/AdvancementsToast";
+import { useUIStore } from "../lib/ui-store";
+import { ModeGate } from "../components/layout/ModeGate";
+import { StickyNav } from "../components/layout/StickyNav";
 
 function NotFoundComponent() {
   return (
@@ -78,16 +81,36 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Sandeep Roy — Portfolio" },
-      { name: "description", content: "Undergrad mechanical engineer building robotics + AI: GPS-denied drones, 6-DOF arms, deep regression on IPMC actuators." },
+      {
+        name: "description",
+        content:
+          "Undergrad mechanical engineer building robotics + AI: GPS-denied drones, 6-DOF arms, deep regression on IPMC actuators.",
+      },
       { name: "author", content: "Sandeep Roy" },
       { property: "og:title", content: "Sandeep Roy — Portfolio" },
-      { property: "og:description", content: "Undergrad mechanical engineer building robotics + AI: GPS-denied drones, 6-DOF arms, deep regression on IPMC actuators." },
+      {
+        property: "og:description",
+        content:
+          "Undergrad mechanical engineer building robotics + AI: GPS-denied drones, 6-DOF arms, deep regression on IPMC actuators.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:title", content: "Sandeep Roy — Portfolio" },
-      { name: "twitter:description", content: "Undergrad mechanical engineer building robotics + AI: GPS-denied drones, 6-DOF arms, deep regression on IPMC actuators." },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/3bb98c3e-8f58-4aa1-a007-fa1e1cc4f1df" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/3bb98c3e-8f58-4aa1-a007-fa1e1cc4f1df" },
+      {
+        name: "twitter:description",
+        content:
+          "Undergrad mechanical engineer building robotics + AI: GPS-denied drones, 6-DOF arms, deep regression on IPMC actuators.",
+      },
+      {
+        property: "og:image",
+        content:
+          "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/3bb98c3e-8f58-4aa1-a007-fa1e1cc4f1df",
+      },
+      {
+        name: "twitter:image",
+        content:
+          "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/3bb98c3e-8f58-4aa1-a007-fa1e1cc4f1df",
+      },
     ],
     links: [
       {
@@ -118,17 +141,35 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const { viewMode, visitorModeChosen } = useUIStore();
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="min-h-screen bg-background text-foreground pb-36">
-        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-        <Outlet />
+      <div
+        className={
+          viewMode === "game"
+            ? "min-h-screen bg-background text-foreground pb-36"
+            : "min-h-screen bg-background text-foreground pt-16"
+        }
+        data-mode={viewMode}
+      >
+        {!visitorModeChosen ? (
+          <ModeGate />
+        ) : (
+          <>
+            {viewMode === "simple" && <StickyNav />}
+            <Outlet />
+          </>
+        )}
       </div>
-      <Hotbar />
-      <CommandConsole />
-      <XpBar />
-      <AdvancementsToast />
+      {visitorModeChosen && viewMode === "game" && (
+        <>
+          <Hotbar />
+          <CommandConsole />
+          <XpBar />
+          <AdvancementsToast />
+        </>
+      )}
     </QueryClientProvider>
   );
 }

@@ -1,0 +1,1262 @@
+\documentclass[11pt,a4paper]{article}
+
+% ==================================================
+% PACKAGES
+% ==================================================
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{amsmath,amssymb}
+
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}
+\usepackage{mwe}
+
+\usepackage{float}
+
+\usepackage[margin=1in]{geometry}
+
+\usepackage{fancyhdr}
+
+\usepackage{hyperref}
+
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+
+\usepackage{xcolor}
+
+\usepackage{caption}
+\usepackage[labelformat=simple]{subcaption}
+
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=*}
+
+\usepackage{ifthen}
+
+% ==================================================
+% GRAPHICS PATH
+% ==================================================
+
+\graphicspath{{images/}{./}}
+
+% ==================================================
+% HYPERREF
+% ==================================================
+
+\hypersetup{
+    colorlinks = true,
+    linkcolor  = blue!60!black,
+    citecolor  = blue!60!black,
+    urlcolor   = blue!60!black
+}
+
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{6pt}
+
+% ==================================================
+% HEADER & FOOTER
+% ==================================================
+
+\pagestyle{fancy}
+
+\fancyhf{}
+
+\setlength{\headheight}{15pt}
+
+\fancyhead[L]{Technology Innovation Hub, IIT Guwahati}
+\fancyhead[R]{IPMC Actuation Dynamics}
+
+\fancyfoot[C]{\thepage}
+
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ==================================================
+% SAFE IMAGE MACRO
+% ==================================================
+
+\newcommand{\safeimage}[2]{
+\IfFileExists{#2}{
+    \includegraphics[width=#1,max width=\linewidth]{#2}
+}{
+    \includegraphics[width=#1,max width=\linewidth]{example-image}
+}
+}
+
+% ==================================================
+% DOCUMENT
+% ==================================================
+
+\begin{document}
+
+% ==================================================
+% TITLE PAGE
+% ==================================================
+
+\begin{titlepage}
+
+\thispagestyle{empty}
+\centering
+
+\begin{minipage}{0.32\textwidth}
+\centering
+\IfFileExists{images/IITG.PNG}{
+    \includegraphics[width=0.72\textwidth]{images/IITG.PNG}
+}{
+    \fbox{\parbox[c][2.8cm][c]{3.6cm}{\centering IITG Logo}}
+}
+\end{minipage}
+\hfill
+\begin{minipage}{0.32\textwidth}
+\centering
+\IfFileExists{images/TIH.PNG}{
+    \includegraphics[width=0.72\textwidth]{images/TIH.PNG}
+}{
+    \fbox{\parbox[c][2.8cm][c]{3.6cm}{\centering TIH Logo}}
+}
+\end{minipage}
+
+\vfill
+
+{\Large\bfseries Experimental Characterization and}\\[0.35cm]
+{\LARGE\bfseries Data-Driven Dynamic Modeling}\\[0.35cm]
+{\Large\bfseries of Ionic Polymer-Metal Composite (IPMC)}\\[0.25cm]
+{\Large\bfseries Actuation Under Variable Electrical}\\[0.25cm]
+{\Large\bfseries and Environmental Conditions}
+
+\vfill
+
+{\large\bfseries Internship Research Report}
+
+\vfill
+
+{\large\bfseries Submitted by}\\[0.35cm]
+{\large Sandeep Roy}\\
+Department of Mechanical Engineering, Jorhat Engineering College\\[0.45cm]
+{\large Pervez Mohsin Ahmed}\\
+Department of Mechanical Engineering, Jorhat Engineering College
+
+\vfill
+
+{\large\bfseries Internship Conducted At}\\[0.3cm]
+Technology Innovation Hub\\
+Indian Institute of Technology Guwahati
+
+\vfill
+
+{\large\bfseries Supervisor}\\[0.3cm]
+Dr. Ankur Gupta
+
+\end{titlepage}
+
+\clearpage
+\pagenumbering{arabic}
+
+% ==================================================
+% ABSTRACT
+% ==================================================
+
+\section*{Abstract}
+
+Ionic Polymer-Metal Composites (IPMCs) are electroactive polymer actuators capable of generating large bending deformation under low-voltage electrical excitation. Due to their lightweight structure, flexibility, biomimetic characteristics, and low power consumption, IPMCs have attracted significant attention for applications in soft robotics, biomedical systems, underwater propulsion, artificial muscles, and adaptive actuation mechanisms.
+
+This work presents a comprehensive experimental and machine learning-based investigation of IPMC actuation dynamics under varying voltage amplitudes and environmental conditions. An ESP32-CAM-based image acquisition system was developed for real-time deformation monitoring of cantilever-configured IPMC actuators subjected to alternating electrical excitation.
+
+Experiments were conducted under WATER, AIR, and ACETONE(1\%) environments using excitation voltages ranging from 2.1 V to 4.9 V. Sequential image frames were recorded at 200 ms intervals during both stimulus and relaxation phases.
+
+A computer vision-based image-processing framework was implemented for automated deformation-angle extraction using contour analysis, skeletonization, and vector-based angle estimation techniques.
+
+The experimentally generated dataset contained 840 deformation observations across multiple operating conditions.
+
+Experimental observations demonstrated strong voltage-dependent and environment-dependent actuation behavior. WATER exhibited the highest bending deformation due to enhanced ionic mobility and improved membrane hydration characteristics.
+
+A deep neural network-based regression framework was developed to predict IPMC deformation under varying experimental conditions. The developed model achieved strong predictive performance with an $R^2$ score of 0.959, demonstrating excellent agreement between experimentally measured and model-predicted deformation behavior.
+
+The developed framework establishes a complete methodology for experimental characterization, image-based deformation analysis, machine learning-driven predictive modeling, and intelligent actuation analysis of IPMC systems.
+
+\vspace{0.4cm}
+
+\noindent
+\textbf{Keywords:}
+IPMC, electroactive polymer, soft robotics, machine learning, deep neural network, image processing, deformation prediction, smart materials.
+
+% ==================================================
+% TABLE OF CONTENTS
+% ==================================================
+
+\newpage
+\tableofcontents
+
+\newpage
+
+% ==================================================
+% INTRODUCTION
+% ==================================================
+
+\section{Introduction}
+
+Electroactive polymers (EAPs) are a class of smart materials capable of converting electrical energy into mechanical deformation. Among various electroactive materials, Ionic Polymer-Metal Composites (IPMCs) have emerged as highly promising soft actuators due to their low operating voltage, lightweight structure, flexibility, silent operation, and biomimetic actuation behavior.
+
+An IPMC actuator typically consists of an ion-exchange polymer membrane coated with conductive metallic electrodes on both surfaces. When subjected to an electric field, hydrated ions migrate within the polymer matrix, resulting in internal stress gradients and macroscopic bending deformation.
+
+Due to these unique electromechanical characteristics, IPMCs have attracted significant research interest in fields such as:
+
+\begin{itemize}
+
+\item soft robotics,
+
+\item underwater propulsion systems,
+
+\item biomedical microdevices,
+
+\item artificial muscles,
+
+\item flexible sensors,
+
+\item adaptive actuation systems.
+
+\end{itemize}
+
+Despite these advantages, accurate prediction of IPMC deformation remains challenging due to strongly coupled nonlinear electrochemical, hydraulic, and mechanical transport phenomena.
+
+The deformation behavior is influenced by multiple interacting factors including:
+
+\begin{itemize}
+
+\item applied voltage,
+
+\item membrane hydration,
+
+\item ionic mobility,
+
+\item environmental conditions,
+
+\item transient relaxation dynamics,
+
+\item solvent transport mechanisms.
+
+\end{itemize}
+
+Conventional analytical modeling approaches often require complex multiphysics formulations and significant computational resources.
+
+Recent advances in machine learning and data-driven modeling have enabled development of predictive frameworks capable of learning nonlinear deformation relationships directly from experimental observations.
+
+The present work focuses on experimental characterization and deep learning-based predictive modeling of IPMC deformation behavior under varying voltage amplitudes and environmental media.
+
+The overall objective of the work is to establish an integrated framework combining:
+
+\begin{itemize}
+
+\item experimental actuation analysis,
+
+\item image-based deformation extraction,
+
+\item dataset generation,
+
+\item deep neural network-based deformation prediction.
+
+\end{itemize}
+
+% ==================================================
+% LITERATURE BACKGROUND
+% ==================================================
+
+\section{Literature Background}
+
+Extensive research has been conducted on the electromechanical behavior and modeling of Ionic Polymer-Metal Composite actuators.
+
+Shahinpoor and Kim established foundational theoretical understanding of ion transport and electroactive deformation mechanisms in IPMC systems.
+
+Bar-Cohen demonstrated the applicability of electroactive polymers in biomimetic robotics and artificial muscle systems.
+
+Several studies have focused on multiphysics modeling of IPMC actuation using electrochemical transport equations, viscoelastic beam theory, and coupled ionic diffusion models.
+
+However, physics-based approaches often become computationally expensive under dynamically varying environmental conditions.
+
+Recent developments in machine learning and deep learning have enabled data-driven prediction of nonlinear actuator behavior directly from experimentally generated datasets.
+
+Deep neural networks have demonstrated strong capability in nonlinear regression, transient system identification, and intelligent soft-actuator modeling.
+
+The present work extends these developments by integrating experimental deformation analysis with deep neural network-based predictive modeling under multiple environmental conditions.
+
+% ==================================================
+% WORKING PRINCIPLE
+% ==================================================
+
+\section{Working Principle of IPMC}
+
+Ionic Polymer-Metal Composites (IPMCs) operate based on ion migration and electro-osmotic transport within an ion-exchange polymer membrane.
+
+An IPMC actuator generally consists of:
+
+\begin{itemize}
+
+\item a Nafion-based ion-exchange polymer membrane,
+
+\item conductive metallic electrodes coated on both surfaces,
+
+\item hydrated mobile cations within the polymer matrix.
+
+\end{itemize}
+
+When an electric field is applied across the electrodes, hydrated cations migrate toward the cathode side of the actuator.
+
+The migration of hydrated ions causes differential swelling inside the polymer structure due to uneven water redistribution.
+
+As a result, one side of the actuator expands while the opposite side contracts, producing macroscopic bending deformation.
+
+The electromechanical behavior of IPMCs is strongly dependent on:
+
+\begin{itemize}
+
+\item ionic diffusivity,
+
+\item membrane hydration,
+
+\item dielectric properties,
+
+\item elastic modulus,
+
+\item environmental medium,
+
+\item excitation voltage and frequency.
+
+\end{itemize}
+
+The deformation process is nonlinear and time-dependent due to coupled electrochemical, hydraulic, and mechanical interactions inside the polymer matrix.
+
+Back-relaxation behavior may also occur due to redistribution of ions and internal pressure gradients after initial deformation.
+
+% ==================================================
+% EXPERIMENTAL SETUP
+% ==================================================
+
+\section{Experimental Methodology}
+
+\subsection{Experimental Setup}
+
+The experimental setup consisted of an IPMC actuator connected to a controlled AC voltage excitation source capable of delivering low-voltage electrical stimulation.
+
+The actuator was fixed in a cantilever configuration, with one end rigidly constrained and the opposite end free to deform under electrical excitation.
+
+A camera-based acquisition system was developed using an ESP32-CAM module for real-time image acquisition and deformation tracking.
+
+The ESP32-CAM module was positioned perpendicular to the plane of deformation to minimize perspective distortion during image capture.
+
+The complete acquisition system was programmed using the Arduino IDE platform.
+
+Sequential image frames were captured at a temporal interval of 200 ms, corresponding to a sampling frequency of approximately 5 Hz.
+
+\subsection{AC Voltage Excitation Strategy}
+
+AC excitation was selected to generate periodic bidirectional deformation of the IPMC actuator.
+
+Under alternating electric fields, hydrated ions continuously redistribute between the electrodes, producing oscillatory bending behavior.
+
+Compared to constant DC excitation, AC excitation reduces prolonged ion accumulation near the electrodes and helps mitigate excessive electrolysis effects.
+
+The applied AC waveform also enabled observation of transient deformation dynamics during repeated stimulus-relaxation cycles.
+
+The resulting deformation profiles exhibited transient nonlinear actuation behavior under alternating electrical excitation.
+
+\begin{equation}
+v(t) = V_0 \sin(2\pi f t)
+\end{equation}
+
+where:
+
+\begin{itemize}
+
+\item $V_0$ represents voltage amplitude
+
+\item $f$ represents excitation frequency
+
+\item $t$ represents time
+
+\end{itemize}
+
+Experiments were conducted under three environmental conditions:
+
+\begin{itemize}
+
+\item WATER
+
+\item AIR
+
+\item ACETONE(1\%)
+
+\end{itemize}
+
+Voltage amplitudes ranging from 2.1 V to 4.9 V were applied sequentially during experimentation.
+
+% ==================================================
+% SETUP FIGURE
+% ==================================================
+
+\begin{figure}[H]
+
+\centering
+
+\safeimage{0.6\textwidth}{images/EXPERIMENTAL_SETUP.jpeg}
+
+\caption{Experimental setup used for IPMC deformation analysis using ESP32-CAM-based image acquisition system.}
+
+\label{fig:setup}
+
+\end{figure}
+
+% ==================================================
+% IMAGE PROCESSING AND DEFORMATION EXTRACTION
+% ==================================================
+
+\section{Image Processing and Deformation Extraction}
+
+To quantify IPMC deformation, the recorded image sequences were processed using a computer vision-based deformation analysis pipeline.
+
+The processing workflow involved:
+
+\begin{itemize}
+
+\item grayscale conversion,
+
+\item Gaussian smoothing,
+
+\item adaptive thresholding,
+
+\item contour detection,
+
+\item skeletonization,
+
+\item centerline estimation,
+
+\item tip tracking,
+
+\item bending-angle estimation.
+
+\end{itemize}
+
+The deformation angle was computed relative to the undeformed reference orientation using vector-angle estimation.
+
+\begin{equation}
+\theta = \arccos\left(\frac{\vec{r} \cdot \vec{d}}{\|\vec{r}\|\,\|\vec{d}\|}\right)
+\end{equation}
+
+\begin{equation}
+\Delta \theta = \theta_t - \theta_{t-1}
+\end{equation}
+
+where $\Delta \theta$ represents the temporal deformation derivative.
+
+\vspace{0.3cm}
+
+where:
+
+\begin{itemize}
+
+\item $\vec{r}$ represents the reference orientation vector
+
+\item $\vec{d}$ represents the deformed tangent vector
+
+\item $\theta$ represents the instantaneous bending angle
+
+\end{itemize}
+
+% ==================================================
+% PIPELINE FIGURE
+% ==================================================
+
+\begin{figure}[H]
+
+\centering
+
+\safeimage{0.95\linewidth}{images/image_processing_pipeline.png}
+
+\caption{Frame-wise deformation extraction and image-processing pipeline for bending-angle estimation.}
+
+\label{fig:pipeline}
+
+\end{figure}
+
+% ==================================================
+% DATASET GENERATION
+% ==================================================
+
+\subsection{Dataset Generation}
+
+The extracted deformation observations were organized into a structured sequential dataset containing:
+
+\begin{itemize}
+
+\item run identifiers
+
+\item environmental medium labels
+
+\item voltage amplitudes
+
+\item temporal information
+
+\item stimulus and relaxation phase identifiers
+
+\item bending-angle measurements
+
+\item deformation derivatives
+
+\end{itemize}
+
+The generated dataset consisted of:
+
+\begin{itemize}
+
+\item 42 experimental runs
+
+\item 20 time steps per run
+
+\item 840 observations
+
+\end{itemize}
+
+\begin{table}[H]
+
+\centering
+
+\caption{Summary of Generated Experimental Dataset}
+
+\begin{tabular}{ll}
+
+\toprule
+
+Parameter & Value \\
+
+\midrule
+
+Total observations & 840 \\
+
+Experimental runs & 42 \\
+
+Environmental media & 3 \\
+
+Voltage range & 2.1 V -- 4.9 V \\
+
+Sampling interval & 200 ms \\
+
+Phases & Stimulus / Relaxation \\
+
+Maximum observed deformation & $\sim70^\circ$ \\
+
+\bottomrule
+
+\end{tabular}
+
+\label{tab:dataset}
+
+\end{table}
+
+\subsection{Experimental Dataset Characteristics}
+
+The experimentally generated dataset represented transient deformation behavior under multiple environmental and voltage conditions.
+
+The dataset included both stimulus and relaxation phase observations, enabling the machine learning model to learn dynamic deformation evolution during actuation cycles.
+
+The deformation-angle distribution covered both low-deformation and high-deformation operating regions, improving model generalization capability.
+
+The generated dataset was sufficiently diverse to capture nonlinear deformation characteristics associated with varying hydration conditions and ionic transport behavior.
+
+\subsection{Back-Relaxation Phenomenon}
+
+One of the characteristic behaviors of IPMC actuators is back-relaxation.
+
+Back-relaxation refers to the gradual reduction in bending displacement after the actuator initially reaches peak deformation under continuous electrical excitation.
+
+This phenomenon occurs due to redistribution of hydrated ions and internal pressure equalization within the polymer membrane.
+
+The transient response of the actuator is governed by competing electrochemical and hydraulic transport mechanisms.
+
+Experimental studies reported in literature indicate that parameters such as ionic diffusivity, dielectric constant, hydraulic permeability, and hydration level significantly influence the magnitude of back-relaxation behavior.
+
+Environmental conditions also affect this phenomenon due to changes in water retention and ion mobility within the polymer matrix.
+
+% ==================================================
+% RESULTS
+% ==================================================
+
+\section{Experimental Results and Discussion}
+
+Experimental observations demonstrated strong voltage-dependent deformation behavior.
+
+Among all investigated environmental media, WATER produced the highest bending response across all voltage conditions.
+
+Maximum bending deformation approached approximately 70$^\circ$ under higher excitation voltages.
+
+AIR and ACETONE(1\%) exhibited comparatively lower deformation amplitudes due to reduced ion transport efficiency.
+
+% ==================================================
+% STIMULUS FIGURE
+% ==================================================
+
+\begin{figure}[H]
+
+\centering
+
+\begin{subfigure}{0.31\linewidth}
+
+\centering
+
+\safeimage{\textwidth}{images/Stimulus_Response_WATER.png}
+
+\caption{WATER}
+
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.31\linewidth}
+
+\centering
+
+\safeimage{\textwidth}{images/Stimulus_Response_AIR.png}
+
+\caption{AIR}
+
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.31\linewidth}
+
+\centering
+
+\safeimage{\textwidth}{images/Stimulus_Response_ACETONE1pct.png}
+
+\caption{ACETONE(1\%)}
+
+\end{subfigure}
+
+\caption{Stimulus phase bending response under different media.}
+
+\label{fig:stimulus}
+
+\end{figure}
+
+\subsection{Effect of Environmental Media}
+
+The surrounding medium significantly influenced the actuation behavior of the IPMC actuator.
+
+Among all investigated media, WATER demonstrated the highest deformation response.
+
+This behavior can be attributed to improved membrane hydration and enhanced ionic mobility within the polymer structure.
+
+Higher water content increases ion transport efficiency and electro-osmotic flow, resulting in larger bending displacement.
+
+In AIR, gradual dehydration of the membrane reduces ionic conductivity and suppresses deformation performance.
+
+ACETONE(1\%) introduced additional transport disturbances and partial reduction in effective hydration, leading to comparatively lower bending amplitudes.
+
+These observations are consistent with previously reported studies on hydration-dependent IPMC actuation behavior.
+
+% ==================================================
+% RELAXATION FIGURE
+% ==================================================
+
+\begin{figure}[H]
+
+\centering
+
+\begin{subfigure}{0.31\linewidth}
+
+\centering
+
+\safeimage{\textwidth}{images/Relaxation_Response_WATER.png}
+
+\caption{WATER}
+
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.31\linewidth}
+
+\centering
+
+\safeimage{\textwidth}{images/Relaxation_Response_AIR.png}
+
+\caption{AIR}
+
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.31\linewidth}
+
+\centering
+
+\safeimage{\textwidth}{images/Relaxation_Response_ACETONE1pct.png}
+
+\caption{ACETONE(1\%)}
+
+\end{subfigure}
+
+\caption{Relaxation phase bending response under different media.}
+
+\label{fig:relaxation}
+
+\end{figure}
+
+% ==================================================
+% PEAK BENDING FIGURE
+% ==================================================
+
+\begin{figure}[H]
+
+\centering
+
+\safeimage{0.65\textwidth}{images/Peak_Bending_vs_Voltage.png}
+
+\caption{Peak bending angle versus voltage for different environmental media.}
+
+\label{fig:peak}
+
+\end{figure}
+
+% ==================================================
+% HEATMAP FIGURE
+% ==================================================
+
+\begin{figure}[H]
+
+\centering
+
+\begin{subfigure}{0.47\linewidth}
+
+\centering
+
+\safeimage{\textwidth}{images/Heatmap_ACETONE1pct_S.png}
+
+\caption{Stimulus}
+
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.47\linewidth}
+
+\centering
+
+\safeimage{\textwidth}{images/Heatmap_ACETONE1pct_R.png}
+
+\caption{Relaxation}
+
+\end{subfigure}
+
+\caption{Deformation heatmaps for ACETONE(1\%) at different voltages.}
+
+\label{fig:heatmap}
+
+\end{figure}
+
+% ==================================================
+% PHASE SPACE FIGURE
+% ==================================================
+
+\begin{figure}[H]
+
+\centering
+
+\safeimage{0.6\textwidth}{images/Phase_Space_ACETONE1pct.png}
+
+\caption{Phase-space trajectory for ACETONE(1\%).}
+
+\label{fig:phase}
+
+\end{figure}
+
+% ==================================================
+% MACHINE LEARNING FRAMEWORK
+% ==================================================
+
+\section{Machine Learning Framework}
+
+\subsection{Feature Engineering and Data Preprocessing}
+
+Prior to neural-network development, the experimentally generated deformation dataset was preprocessed and transformed into a structured regression-learning framework.
+
+The input parameters utilized for predictive modeling included:
+
+\begin{itemize}
+
+\item applied voltage amplitude,
+
+\item time information,
+
+\item environmental medium,
+
+\item actuation phase.
+
+\end{itemize}
+
+Categorical variables such as environmental medium and phase identifiers were converted into numerical format using one-hot encoding techniques.
+
+Feature standardization was subsequently performed using z-score normalization to improve convergence stability and training efficiency of the neural network.
+
+The target output variable was defined as the experimentally extracted bending deformation angle.
+
+The complete dataset containing 840 observations was divided into training and testing subsets using an 80:20 split ratio.
+
+The machine learning framework was implemented using TensorFlow, Scikit-learn, NumPy, and Pandas libraries within the Google Colaboratory environment.
+
+\subsection{Motivation for Data-Driven Modeling}
+
+The electromechanical deformation behavior of Ionic Polymer-Metal Composite (IPMC) actuators is governed by highly coupled nonlinear electrochemical, hydraulic, and mechanical interactions.
+
+Conventional analytical modeling approaches require complex multiphysics formulations involving ionic transport equations, electro-osmotic flow behavior, viscoelastic deformation, and transient hydration dynamics.
+
+These formulations become computationally intensive and difficult to generalize under varying environmental conditions.
+
+Machine learning provides an alternative data-driven framework capable of learning nonlinear relationships directly from experimentally generated deformation sequences.
+
+By utilizing experimentally extracted deformation data, neural-network-based models can approximate the nonlinear mapping between operating parameters and resulting deformation response without explicitly solving coupled governing equations.
+
+Such approaches are highly relevant for future soft robotic systems, intelligent actuators, and real-time embedded control applications.
+
+\subsection{Neural Network Architecture}
+
+A feedforward deep neural network (DNN) regression architecture was implemented for predictive modeling of IPMC deformation behavior.
+
+The neural-network model utilized the following input parameters:
+
+\begin{itemize}
+
+\item applied voltage,
+
+\item temporal information,
+
+\item environmental medium,
+
+\item actuation phase.
+
+\end{itemize}
+
+The implemented architecture consisted of multiple fully connected dense layers with nonlinear activation functions.
+
+Rectified Linear Unit (ReLU) activation functions were utilized to improve nonlinear feature learning capability and computational efficiency.
+
+Dropout regularization layers were incorporated to reduce overfitting and improve model generalization performance.
+
+The developed architecture consisted of:
+
+\begin{itemize}
+
+\item Input Layer
+
+\item Dense Layer (128 neurons, ReLU)
+
+\item Dropout Layer (20\%)
+
+\item Dense Layer (64 neurons, ReLU)
+
+\item Dropout Layer (20\%)
+
+\item Dense Layer (32 neurons, ReLU)
+
+\item Output Regression Layer
+
+\end{itemize}
+
+Figure~\ref{fig:nn_visual} presents the structural layout of the implemented feedforward neural-network regression model.
+
+The input feature vector contains experimentally extracted operating parameters such as voltage amplitude, temporal information, environmental medium encoding, and actuation phase information. These features are passed through successive fully connected dense layers, where nonlinear ReLU activation functions enable the network to learn complex relationships between experimental conditions and bending deformation response.
+
+Dropout layers are placed between dense layers to randomly deactivate a fraction of neurons during training, thereby reducing overfitting and improving generalization for the limited experimental dataset. The final output layer contains a single regression node that predicts the instantaneous IPMC bending angle.
+
+\begin{figure}[H]
+
+\centering
+
+\safeimage{0.9\linewidth}{images/NN_VISUAL.png}
+
+\caption{Feedforward neural-network architecture used for IPMC deformation-angle regression.}
+
+\label{fig:nn_visual}
+
+\end{figure}
+
+The model was trained using the Adam optimization algorithm with Mean Squared Error (MSE) as the objective loss function.
+
+Early stopping criteria were implemented during training to prevent excessive overfitting and improve convergence stability.
+
+% ==================================================
+% ML RESULTS
+% ==================================================
+
+\section{Machine Learning Results and Analysis}
+
+\subsection{Training Convergence Analysis}
+
+\begin{figure}[H]
+
+\centering
+
+\safeimage{0.7\linewidth}{images/training_loss_2.png}
+
+\caption{Training and validation loss convergence during neural-network training.}
+
+\label{fig:training_loss}
+
+\end{figure}
+
+The training-history plot demonstrates stable convergence behavior of the developed neural-network model.
+
+Both training and validation losses progressively decreased with increasing epochs, indicating effective learning of nonlinear deformation patterns from the experimental dataset.
+
+The absence of significant divergence between training and validation losses confirms that severe overfitting was successfully avoided through dropout regularization and early stopping mechanisms.
+
+\subsection{Model Performance Evaluation}
+
+The predictive capability of the developed neural-network model was evaluated using standard regression-performance metrics.
+
+The following evaluation metrics were utilized:
+
+\begin{itemize}
+
+\item Mean Absolute Error (MAE)
+
+\item Root Mean Square Error (RMSE)
+
+\item Coefficient of Determination ($R^2$ Score)
+
+\end{itemize}
+
+\begin{table}[H]
+
+\centering
+
+\caption{Regression Performance of the Developed Neural-Network Model}
+
+\begin{tabular}{lc}
+
+\toprule
+
+Metric & Value \\
+
+\midrule
+
+MAE & 2.73$^\circ$ \\
+
+RMSE & 4.08$^\circ$ \\
+
+$R^2$ Score & 0.959 \\
+
+\bottomrule
+
+\end{tabular}
+
+\label{tab:ml_metrics}
+
+\end{table}
+
+The obtained $R^2$ score of approximately 0.96 indicates that the developed neural-network model successfully captured nearly 96\% of the variance present in experimentally observed deformation behavior.
+
+The low MAE and RMSE values further demonstrate strong predictive capability and stable nonlinear regression performance across varying voltage amplitudes and environmental conditions.
+
+The prediction accuracy confirms that the developed model can reliably approximate complex IPMC deformation dynamics using experimentally generated datasets.
+
+\begin{figure}[H]
+
+\centering
+
+\safeimage{0.6\linewidth}{images/model_metrics.png}
+
+\caption{Regression-performance metrics of the developed neural-network model.}
+
+\label{fig:model_metrics}
+
+\end{figure}
+
+\subsection{Prediction Accuracy Analysis}
+
+The relationship between experimentally measured deformation angles and neural-network-predicted deformation values is illustrated in Figure~\ref{fig:predicted_vs_actual}.
+
+The predicted values closely follow the ideal one-to-one regression trend, demonstrating strong agreement between experimental observations and model predictions.
+
+The clustering of data points around the ideal regression line confirms that the developed neural-network model effectively learned the nonlinear deformation characteristics of the IPMC actuator.
+
+\begin{figure}[H]
+
+\centering
+
+\safeimage{0.65\linewidth}{images/predicted_vs_actual_2.png}
+
+\caption{Comparison between experimentally measured and neural-network-predicted deformation angles.}
+
+\label{fig:predicted_vs_actual}
+
+\end{figure}
+
+\subsection{Residual Error Analysis}
+
+Residual analysis was performed to evaluate prediction consistency and model stability.
+
+Residual error is defined as the difference between experimentally observed deformation and model-predicted deformation.
+
+The residual distribution plot demonstrates that the majority of prediction errors remain concentrated near zero.
+
+This indicates stable regression behavior and absence of significant systematic prediction bias.
+
+\begin{figure}[H]
+
+\centering
+
+\safeimage{0.65\linewidth}{images/residual_distribution_2.png}
+
+\caption{Distribution of residual prediction errors.}
+
+\label{fig:residual_distribution}
+
+\end{figure}
+
+The residual scatter plot further confirms that prediction errors remain randomly distributed across the prediction range without strong structured patterns.
+
+Such behavior indicates effective generalization capability of the developed neural-network model.
+
+\begin{figure}[H]
+
+\centering
+
+\safeimage{0.65\linewidth}{images/residual_scatter_2.png}
+
+\caption{Residual error distribution with respect to predicted deformation values.}
+
+\label{fig:residual_scatter}
+
+\end{figure}
+
+\subsection{Feature Correlation Analysis}
+
+Correlation analysis was performed to investigate relationships between experimental variables and bending deformation behavior.
+
+The correlation heatmap indicates strong dependency between voltage amplitude and deformation response.
+
+Environmental media also demonstrated measurable influence on deformation dynamics due to differences in hydration retention and ionic mobility.
+
+The observed correlations are consistent with experimentally observed actuation trends.
+
+\begin{figure}[H]
+
+\centering
+
+\safeimage{0.65\linewidth}{images/feature_correlation_heatmap_2.png}
+
+\caption{Feature-correlation heatmap for experimental dataset variables.}
+
+\label{fig:feature_correlation}
+
+\end{figure}
+
+\subsection{Medium-Wise Deformation Prediction}
+
+The trained neural-network model was additionally utilized to predict deformation behavior under different environmental conditions.
+
+The predicted deformation responses clearly demonstrate that WATER produced the highest deformation amplitudes across the investigated voltage range.
+
+AIR and ACETONE(1\%) environments exhibited comparatively lower deformation behavior due to reduced ionic mobility and hydration efficiency.
+
+The prediction trends remained consistent with experimentally observed actuation behavior.
+
+\begin{figure}[H]
+
+\centering
+
+\safeimage{0.65\linewidth}{images/medium_prediction_WATER.png}
+
+\caption{Predicted deformation response under WATER environment.}
+
+\label{fig:medium_prediction_water}
+
+\end{figure}
+
+\begin{figure}[H]
+
+\centering
+
+\safeimage{0.65\linewidth}{images/medium_prediction_AIR_2.png}
+
+\caption{Predicted deformation response under AIR environment.}
+
+\label{fig:medium_prediction_air}
+
+\end{figure}
+
+\begin{figure}[H]
+
+\centering
+
+\safeimage{0.65\linewidth}{images/medium_prediction_ACETONE1pct.png}
+
+\caption{Predicted deformation response under ACETONE(1\%) environment.}
+
+\label{fig:medium_prediction_acetone}
+
+\end{figure}
+
+The developed deep neural-network framework successfully learned nonlinear electromechanical deformation dynamics directly from experimentally generated image-based deformation datasets.
+
+The obtained prediction accuracy and residual stability demonstrate the effectiveness of data-driven modeling approaches for future intelligent soft-actuation systems and real-time embedded IPMC control applications.
+
+% ==================================================
+% LIMITATIONS
+% ==================================================
+
+\section{Limitations of Present Work}
+
+The present work primarily focused on low-voltage deformation analysis under controlled laboratory conditions.
+
+Several factors influencing IPMC behavior were not explicitly investigated, including:
+
+\begin{itemize}
+
+\item excitation-frequency dependency,
+
+\item long-term membrane degradation,
+
+\item electrode aging,
+
+\item temperature-dependent ionic transport,
+
+\item humidity-controlled environmental effects,
+
+\item membrane-thickness variation,
+
+\item hysteresis characterization.
+
+\end{itemize}
+
+Additionally, the developed neural network model was trained using experimentally generated data within a limited operating range.
+
+Future studies involving larger datasets, additional environmental conditions, and real-time embedded implementation can further improve predictive accuracy and generalization capability.
+
+% ==================================================
+% CONCLUSION
+% ==================================================
+
+\section{Conclusion}
+
+This work presented a comprehensive experimental and machine learning-based investigation of Ionic Polymer-Metal Composite (IPMC) actuation dynamics under varying voltage amplitudes and environmental conditions.
+
+An ESP32-CAM-based embedded imaging system was successfully developed for real-time deformation monitoring of cantilever-configured IPMC actuators.
+
+A computer vision-based image-processing framework was implemented for automated extraction of bending deformation angles from experimentally captured image sequences.
+
+Experimental investigations demonstrated strong voltage-dependent and environment-dependent actuation behavior.
+
+Among all investigated environmental conditions, WATER exhibited the highest deformation response due to enhanced membrane hydration and improved ionic mobility.
+
+The experimentally generated dataset consisting of 840 observations was subsequently utilized for deep learning-based predictive modeling.
+
+A deep neural network regression framework was successfully developed for prediction of nonlinear IPMC deformation behavior.
+
+The developed model demonstrated strong predictive performance with low regression error and an $R^2$ score of 0.959, indicating excellent agreement between experimentally measured and model-predicted deformation.
+
+Residual analysis and convergence behavior further confirmed stable generalization capability of the proposed framework.
+
+The overall methodology establishes an integrated framework for experimental characterization, intelligent deformation analysis, and machine learning-driven predictive modeling of soft electroactive polymer systems.
+
+The developed framework can contribute toward future development of intelligent soft robotic actuators, adaptive control systems, and AI-assisted smart-material platforms.
+
+% ==================================================
+% FUTURE SCOPE
+% ==================================================
+
+\section*{Future Scope}
+
+\addcontentsline{toc}{section}{Future Scope}
+
+Future work can further extend the developed framework through:
+
+\begin{enumerate}
+
+\item investigation of frequency-dependent IPMC actuation behavior,
+
+\item development of physics-informed neural network models,
+
+\item implementation of real-time embedded deformation prediction,
+
+\item integration with closed-loop feedback control systems,
+
+\item multi-actuator soft robotic coordination,
+
+\item digital twin development for electroactive polymer systems,
+
+\item reinforcement learning-based adaptive actuation control.
+
+\end{enumerate}
+
+% ==================================================
+% ACKNOWLEDGEMENT
+% ==================================================
+
+\section*{Acknowledgement}
+
+\addcontentsline{toc}{section}{Acknowledgement}
+
+The authors sincerely acknowledge the support and guidance provided by the Technology Innovation Hub, IIT Guwahati during the internship program.
+
+The authors express their gratitude to Dr. Ankur Gupta for valuable guidance, mentorship, and technical support throughout the project duration.
+
+% ==================================================
+% REFERENCES
+% ==================================================
+
+\begin{thebibliography}{10}
+
+\addcontentsline{toc}{section}{References}
+
+\bibitem{1}
+M. Shahinpoor and K. J. Kim,
+``Ionic Polymer--Metal Composites: Fundamentals,''
+Smart Materials and Structures,
+2001.
+
+\bibitem{2}
+Y. Bar-Cohen,
+Electroactive Polymer Actuators as Artificial Muscles,
+SPIE Press.
+
+\bibitem{3}
+Z. Chen and X. Tan,
+``Physics-Based Modeling of IPMC Actuators,''
+IEEE/ASME Transactions on Mechatronics.
+
+\bibitem{4}
+T. Wang et al.,
+``Data-Driven Modeling of IPMC Actuators Using Deep Learning,''
+Smart Materials and Structures.
+
+\bibitem{5}
+Y.-T. Chen and K. Behdinan,
+``Multiphysics Simulation of Parametric Effects on IPMC Actuation Dynamics and Back-Relaxation,''
+Smart Materials and Structures,
+2025.
+
+\bibitem{6}
+Q. He et al.,
+``Review on Improvement, Modeling and Application of Ionic Polymer Metal Composite Artificial Muscle,''
+Journal of Bionic Engineering,
+2022.
+
+\bibitem{7}
+M. Porfiri,
+``Charge Dynamics in Ionic Polymer Metal Composites,''
+Journal of Applied Physics,
+2008.
+
+\bibitem{8}
+I. Goodfellow, Y. Bengio, and A. Courville,
+Deep Learning,
+MIT Press,
+2016.
+
+\bibitem{9}
+D. P. Kingma and J. Ba,
+``Adam: A Method for Stochastic Optimization,''
+International Conference on Learning Representations,
+2015.
+
+\bibitem{10}
+F. Chollet,
+Deep Learning with Python,
+Manning Publications,
+2018.
+
+\end{thebibliography}
+
+\end{document}

@@ -14,10 +14,7 @@ const toneClasses = {
 
 export function PixelCard({ tone = "obsidian", className = "", children, ...rest }: Props) {
   return (
-    <div
-      {...rest}
-      className={`pixel-border pixel-bevel ${toneClasses[tone]} ${className}`}
-    >
+    <div {...rest} className={`pixel-border pixel-bevel ${toneClasses[tone]} ${className}`}>
       {children}
     </div>
   );

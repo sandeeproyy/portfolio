@@ -1,0 +1,21 @@
+{
+  "generated_csv": "ipmc_frames_physics840_v4_rough.csv",
+  "n_rows": 840,
+  "n_runs": 42,
+  "frames_per_run": 20,
+  "dt_ms": 500,
+  "max_bend_deg": 70.0,
+  "drive_freq_hz": 0.22,
+  "tau_stim_s_model": 1.3,
+  "medium_gain": {
+    "WATER": 1.0,
+    "AIR": 0.78,
+    "ACETONE(1%)": 0.58
+  },
+  "voltage_values": [2.1, 2.5, 2.6, 3.0, 3.5, 4.0, 4.5, 4.9],
+  "phase_meaning_assumed": {
+    "S": "Stimulus (voltage applied)",
+    "R": "Relaxation (voltage off)"
+  },
+  "global_scale_applied_to_angles": 1.2169600283972848
+}

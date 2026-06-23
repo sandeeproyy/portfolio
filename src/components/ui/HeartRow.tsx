@@ -21,7 +21,13 @@ function Heart({ state }: { state: "full" | "half" | "empty" }) {
   const fill = state === "empty" ? "transparent" : "var(--redstone)";
   const halfFill = state === "half" ? "var(--redstone)" : "transparent";
   return (
-    <svg width="14" height="14" viewBox="0 0 10 10" shapeRendering="crispEdges" className="pixelated">
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 10 10"
+      shapeRendering="crispEdges"
+      className="pixelated"
+    >
       <rect x="1" y="2" width="3" height="1" fill={fill} />
       <rect x="6" y="2" width="3" height="1" fill={fill} />
       <rect x="0" y="3" width="4" height="1" fill={fill} />

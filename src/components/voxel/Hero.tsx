@@ -6,7 +6,8 @@ import * as THREE from "three";
 function Island() {
   const ref = useRef<THREE.InstancedMesh>(null);
   const meta = useMemo(() => {
-    const items: { pos: [number, number, number]; kind: "grass" | "dirt" | "stone" | "diamond" }[] = [];
+    const items: { pos: [number, number, number]; kind: "grass" | "dirt" | "stone" | "diamond" }[] =
+      [];
     const R = 6;
     for (let x = -R; x <= R; x++) {
       for (let z = -R; z <= R; z++) {
@@ -59,16 +60,35 @@ function FloatingDrone() {
   useFrame((st) => {
     if (!g.current) return;
     const t = st.clock.elapsedTime;
-    g.current.position.set(Math.sin(t * 0.6) * 4, 3 + Math.sin(t * 1.2) * 0.4, Math.cos(t * 0.6) * 4);
+    g.current.position.set(
+      Math.sin(t * 0.6) * 4,
+      3 + Math.sin(t * 1.2) * 0.4,
+      Math.cos(t * 0.6) * 4,
+    );
     g.current.rotation.y = -t * 0.6;
   });
   return (
     <group ref={g}>
-      <mesh><boxGeometry args={[0.8, 0.2, 0.8]} /><meshStandardMaterial color="#9aa0a6" /></mesh>
-      <mesh position={[0.6, 0.1, 0.6]}><boxGeometry args={[0.5, 0.05, 0.05]} /><meshStandardMaterial color="#5cd6ff" /></mesh>
-      <mesh position={[-0.6, 0.1, 0.6]}><boxGeometry args={[0.5, 0.05, 0.05]} /><meshStandardMaterial color="#5cd6ff" /></mesh>
-      <mesh position={[0.6, 0.1, -0.6]}><boxGeometry args={[0.5, 0.05, 0.05]} /><meshStandardMaterial color="#5cd6ff" /></mesh>
-      <mesh position={[-0.6, 0.1, -0.6]}><boxGeometry args={[0.5, 0.05, 0.05]} /><meshStandardMaterial color="#5cd6ff" /></mesh>
+      <mesh>
+        <boxGeometry args={[0.8, 0.2, 0.8]} />
+        <meshStandardMaterial color="#9aa0a6" />
+      </mesh>
+      <mesh position={[0.6, 0.1, 0.6]}>
+        <boxGeometry args={[0.5, 0.05, 0.05]} />
+        <meshStandardMaterial color="#5cd6ff" />
+      </mesh>
+      <mesh position={[-0.6, 0.1, 0.6]}>
+        <boxGeometry args={[0.5, 0.05, 0.05]} />
+        <meshStandardMaterial color="#5cd6ff" />
+      </mesh>
+      <mesh position={[0.6, 0.1, -0.6]}>
+        <boxGeometry args={[0.5, 0.05, 0.05]} />
+        <meshStandardMaterial color="#5cd6ff" />
+      </mesh>
+      <mesh position={[-0.6, 0.1, -0.6]}>
+        <boxGeometry args={[0.5, 0.05, 0.05]} />
+        <meshStandardMaterial color="#5cd6ff" />
+      </mesh>
     </group>
   );
 }
@@ -76,14 +96,17 @@ function FloatingDrone() {
 function Particles() {
   const count = 40;
   const ref = useRef<THREE.InstancedMesh>(null);
-  const offsets = useMemo(() =>
-    Array.from({ length: count }, () => ({
-      x: (Math.random() - 0.5) * 20,
-      y: Math.random() * 12 - 2,
-      z: (Math.random() - 0.5) * 20,
-      speed: 0.3 + Math.random() * 0.6,
-      phase: Math.random() * Math.PI * 2,
-    })), []);
+  const offsets = useMemo(
+    () =>
+      Array.from({ length: count }, () => ({
+        x: (Math.random() - 0.5) * 20,
+        y: Math.random() * 12 - 2,
+        z: (Math.random() - 0.5) * 20,
+        speed: 0.3 + Math.random() * 0.6,
+        phase: Math.random() * Math.PI * 2,
+      })),
+    [],
+  );
 
   useFrame((st) => {
     if (!ref.current) return;
@@ -93,7 +116,7 @@ function Particles() {
       dummy.position.set(
         o.x + Math.sin(t * o.speed + o.phase) * 0.5,
         o.y + Math.sin(t * o.speed * 1.5 + o.phase) * 1.2,
-        o.z + Math.cos(t * o.speed + o.phase) * 0.5
+        o.z + Math.cos(t * o.speed + o.phase) * 0.5,
       );
       dummy.scale.setScalar(0.08 + 0.04 * Math.sin(t * 2 + o.phase));
       dummy.updateMatrix();
@@ -105,7 +128,13 @@ function Particles() {
   return (
     <instancedMesh ref={ref} args={[undefined, undefined, count]}>
       <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color="#5cd6ff" emissive="#5cd6ff" emissiveIntensity={0.8} transparent opacity={0.7} />
+      <meshStandardMaterial
+        color="#5cd6ff"
+        emissive="#5cd6ff"
+        emissiveIntensity={0.8}
+        transparent
+        opacity={0.7}
+      />
     </instancedMesh>
   );
 }
