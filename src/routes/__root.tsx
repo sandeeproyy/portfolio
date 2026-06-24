@@ -8,6 +8,8 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { type ReactNode } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Briefcase } from "lucide-react";
 
 import appCss from "../styles.css?url";
 import { Hotbar } from "../components/layout/Hotbar";
@@ -17,6 +19,8 @@ import { AdvancementsToast } from "../components/layout/AdvancementsToast";
 import { useUIStore } from "../lib/ui-store";
 import { ModeGate } from "../components/layout/ModeGate";
 import { StickyNav } from "../components/layout/StickyNav";
+import { DayNightToggle } from "../components/layout/DayNightToggle";
+import { playSound } from "../lib/sound";
 
 function NotFoundComponent() {
   return (
@@ -141,7 +145,7 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const { viewMode, visitorModeChosen } = useUIStore();
+  const { viewMode, visitorModeChosen, isTransitioning, transitionToMode } = useUIStore();
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -153,6 +157,24 @@ function RootComponent() {
         }
         data-mode={viewMode}
       >
+        {/* Global Floating Header for Game Mode */}
+        {visitorModeChosen && viewMode === "game" && (
+          <div className="fixed top-4 right-4 z-[100] flex items-center gap-2 pointer-events-auto">
+            <DayNightToggle />
+            <button
+              onClick={() => {
+                playSound("click");
+                transitionToMode("simple");
+              }}
+              className="pixel-border pixel-bevel bg-obsidian/90 hover:bg-stone/85 text-diamond px-3 py-2 font-display text-[9px] md:text-[10px] flex items-center gap-2 transition-all shadow-lg active:translate-y-0.5 cursor-pointer"
+              title="Switch to Professional Mode"
+            >
+              <Briefcase size={14} className="text-diamond" />
+              <span>PROFESSIONAL MODE</span>
+            </button>
+          </div>
+        )}
+
         {!visitorModeChosen ? (
           <ModeGate />
         ) : (
@@ -162,6 +184,7 @@ function RootComponent() {
           </>
         )}
       </div>
+
       {visitorModeChosen && viewMode === "game" && (
         <>
           <Hotbar />
@@ -170,6 +193,45 @@ function RootComponent() {
           <AdvancementsToast />
         </>
       )}
+
+      {/* Screen-Wipe Portal Transition Door Overlay */}
+      <AnimatePresence>
+        {isTransitioning && (
+          <div className="fixed inset-0 z-[999999] pointer-events-none">
+            {/* Left Door */}
+            <motion.div
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ duration: 0.45, ease: [0.77, 0, 0.175, 1] }}
+              className="absolute top-0 left-0 bottom-0 w-1/2 bg-zinc-950 border-r border-zinc-800/30 flex items-center justify-end pr-4 md:pr-10"
+              style={{ pointerEvents: "auto" }}
+            >
+              <div className="w-1.5 h-24 bg-zinc-800 rounded-full opacity-20" />
+            </motion.div>
+
+            {/* Right Door */}
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ duration: 0.45, ease: [0.77, 0, 0.175, 1] }}
+              className="absolute top-0 right-0 bottom-0 w-1/2 bg-zinc-950 border-l border-zinc-800/30 flex items-center justify-start pl-4 md:pl-10"
+              style={{ pointerEvents: "auto" }}
+            >
+              <div className="w-1.5 h-24 bg-zinc-800 rounded-full opacity-20" />
+            </motion.div>
+
+            {/* Glowing energy line in the middle */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0, 1, 1, 0] }}
+              transition={{ duration: 0.9 }}
+              className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[2px] bg-cyan-400 shadow-[0_0_15px_#22d3ee]"
+            />
+          </div>
+        )}
+      </AnimatePresence>
     </QueryClientProvider>
   );
 }

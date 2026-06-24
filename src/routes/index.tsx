@@ -283,11 +283,6 @@ function GameSpawn() {
         {/* Gradient overlay for text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0a0e1a]/80 pointer-events-none" />
 
-        {/* Day/night toggle */}
-        <div className="absolute top-4 right-4 z-10">
-          <DayNightToggle />
-        </div>
-
         {/* Hero text overlay */}
         <div className="relative z-10 mx-auto max-w-5xl px-4 pt-24 md:pt-32 pb-8 pointer-events-none">
           <div className="pointer-events-auto">
@@ -432,10 +427,18 @@ function GameSpawn() {
                   tone="stone"
                   className="p-0 overflow-hidden transition-transform hover:-translate-y-1"
                 >
-                  {/* Image placeholder */}
+                  {/* Image placeholder or actual image */}
                   <div className="h-40 bg-gradient-to-br from-obsidian/80 to-stone/60 flex items-center justify-center relative overflow-hidden">
-                    <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,oklch(0.78_0.14_200/0.05)_10px,oklch(0.78_0.14_200/0.05)_20px)]" />
-                    <ProjectIcon variant={p.icon} size={72} />
+                    <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,oklch(0.78_0.14_200/0.05)_10px,oklch(0.78_0.14_200/0.05)_20px)] z-10 pointer-events-none" />
+                    {p.image ? (
+                      <img
+                        src={p.image}
+                        alt={p.title}
+                        className="absolute inset-0 w-full h-full object-cover pixelated hover:scale-105 transition-all duration-300"
+                      />
+                    ) : (
+                      <ProjectIcon variant={p.icon} size={72} />
+                    )}
                   </div>
                   <div className="p-4">
                     <div className="flex items-center justify-between gap-2">

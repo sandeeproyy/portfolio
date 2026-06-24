@@ -70,7 +70,7 @@ export function Hotbar() {
           if (slot.isConsole) {
             toggleConsole();
           } else if (slot.isModeToggle) {
-            useUIStore.getState().setViewMode("simple");
+            useUIStore.getState().transitionToMode("simple");
             router.navigate({ to: "/" });
           } else if (slot.path) {
             router.navigate({ to: slot.path });
@@ -110,7 +110,7 @@ export function Hotbar() {
                 if (slot.isConsole) {
                   toggleConsole();
                 } else if (slot.isModeToggle) {
-                  useUIStore.getState().setViewMode("simple");
+                  useUIStore.getState().transitionToMode("simple");
                   router.navigate({ to: "/" });
                 } else if (slot.path) {
                   router.navigate({ to: slot.path });

@@ -497,3 +497,55 @@
     transition-delay: 0s !important;
   }
 }
+
+/* Twinkling and scrolling stars space sky for Game Mode */
+[data-mode="game"] {
+  background:
+    radial-gradient(circle at 15% 25%, rgba(92, 214, 255, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 85% 75%, rgba(162, 59, 214, 0.08) 0%, transparent 45%),
+    linear-gradient(to bottom, #04060c, #0a0e1f) !important;
+  background-attachment: fixed !important;
+  position: relative;
+}
+
+[data-mode="game"]::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 20px 30px, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 40px 70px, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 90px 40px, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 150px 80px, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(1.5px 1.5px at 200px 10px, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 250px 90px, #fff, rgba(0, 0, 0, 0));
+  background-size: 280px 280px;
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
+  animation: stars-scroll 120s linear infinite;
+}
+
+@keyframes stars-scroll {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 -280px;
+  }
+}
+
+/* Enhancements for Game Mode PixelCards */
+[data-mode="game"] div.pixel-border {
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+[data-mode="game"] div.pixel-border:hover {
+  border-color: var(--color-diamond) !important;
+  box-shadow: 0 0 20px rgba(92, 214, 255, 0.15) !important;
+}
+
+/* Additional styling tweaks to de-clutter advancement and crafting overlays */
+.dark [data-mode="game"] .section-gradient {
+  background: transparent !important;
+}

@@ -75,14 +75,14 @@ export function CommandConsole() {
         setLog((l) => [...l, `[op] Switching to Recruiter Mode...`]);
         playSound("portal");
         triggerToast("Mode Shift", "Entering Professional Mode");
-        useUIStore.getState().setViewMode("simple");
+        useUIStore.getState().transitionToMode("simple");
         navigate({ to: "/" });
         setTimeout(() => setConsoleOpen(false), 250);
       } else if (target === "game" || target === "interactive") {
         setLog((l) => [...l, `[op] Switching to Game Mode...`]);
         playSound("portal");
         triggerToast("Mode Shift", "Entering Game Mode");
-        useUIStore.getState().setViewMode("game");
+        useUIStore.getState().transitionToMode("game");
         navigate({ to: "/" });
         setTimeout(() => setConsoleOpen(false), 250);
       } else if (to) {

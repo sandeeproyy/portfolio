@@ -4,11 +4,11 @@ import { motion } from "framer-motion";
 import { Sparkles, Briefcase } from "lucide-react";
 
 export function ModeGate() {
-  const { setViewMode } = useUIStore();
+  const { transitionToMode } = useUIStore();
 
   function selectMode(mode: "game" | "simple") {
     playSound("click");
-    setViewMode(mode);
+    transitionToMode(mode);
   }
 
   return (

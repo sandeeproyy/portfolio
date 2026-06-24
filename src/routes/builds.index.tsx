@@ -115,10 +115,18 @@ function BuildsGallery() {
               tone="stone"
               className="h-full flex flex-col p-0 overflow-hidden transition-transform hover:-translate-y-1"
             >
-              {/* Image placeholder */}
+              {/* Image placeholder or actual image */}
               <div className="h-48 bg-gradient-to-br from-obsidian/80 to-stone/60 flex items-center justify-center relative overflow-hidden shrink-0">
-                <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,oklch(0.78_0.14_200/0.05)_10px,oklch(0.78_0.14_200/0.05)_20px)]" />
-                <ProjectIcon variant={p.icon} size={80} />
+                <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,oklch(0.78_0.14_200/0.05)_10px,oklch(0.78_0.14_200/0.05)_20px)] z-10 pointer-events-none" />
+                {p.image ? (
+                  <img
+                    src={p.image}
+                    alt={p.title}
+                    className="absolute inset-0 w-full h-full object-cover pixelated hover:scale-105 transition-all duration-300"
+                  />
+                ) : (
+                  <ProjectIcon variant={p.icon} size={80} />
+                )}
               </div>
               <div className="p-5 flex flex-col flex-1">
                 <div className="flex items-center justify-between gap-2 mb-2">

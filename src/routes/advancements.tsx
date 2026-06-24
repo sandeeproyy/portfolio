@@ -101,8 +101,19 @@ function GameAdvancementsPage() {
         </p>
       </header>
 
-      <div className="pixel-border pixel-bevel bg-obsidian/85 p-4 overflow-x-auto">
-        <div className="relative" style={{ width: W, height: H }}>
+      <div className="pixel-border pixel-bevel bg-black/50 p-4 overflow-x-auto">
+        <div
+          className="relative"
+          style={{
+            width: W,
+            height: H,
+            backgroundImage:
+              "radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 0), radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0)",
+            backgroundSize: "40px 40px, 20px 20px",
+            backgroundPosition: "0 0, 10px 10px",
+            backgroundColor: "#0d0f15",
+          }}
+        >
           {/* connector lines */}
           <svg className="absolute inset-0 pointer-events-none" width={W} height={H}>
             {advancements.flatMap((n) =>

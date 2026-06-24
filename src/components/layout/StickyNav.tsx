@@ -3,11 +3,11 @@ import { useUIStore } from "@/lib/ui-store";
 import { playSound } from "@/lib/sound";
 
 export function StickyNav() {
-  const { viewMode, setViewMode } = useUIStore();
+  const { viewMode, transitionToMode } = useUIStore();
 
   function toggleMode(mode: "game" | "simple") {
     playSound("click");
-    setViewMode(mode);
+    transitionToMode(mode);
   }
 
   return (

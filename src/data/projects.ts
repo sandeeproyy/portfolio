@@ -53,7 +53,7 @@ export const projects: Project[] = [
       },
     ],
     demo: null,
-    image: "/placeholder-drone.jpg",
+    image: "/Project Images/Drone1.jpeg",
     github: "https://github.com/sandeeproyy/drone-project-placeholder",
   },
   {
@@ -91,7 +91,7 @@ export const projects: Project[] = [
       },
     ],
     demo: "arm-ik",
-    image: "/placeholder-arm.jpg",
+    image: "/Project Images/RoboticArm1.jpeg",
     github: "https://github.com/sandeeproyy/robotic-arm-placeholder",
   },
   {
@@ -128,7 +128,7 @@ export const projects: Project[] = [
       },
     ],
     demo: "ipmc-ml",
-    image: "/placeholder-ipmc.jpg",
+    image: "/Project Images/IPMC1.jpeg",
     github: "https://github.com/sandeeproyy/ipmc-ml-placeholder",
   },
   {
@@ -166,7 +166,7 @@ export const projects: Project[] = [
     ],
     demo: null,
     repo: "https://github.com/sandeeproyy",
-    image: "/placeholder-solar.jpg",
+    image: "/Project Images/AttendanceManager.jpeg",
     github: "https://github.com/sandeeproyy/solar-tracker-placeholder",
   },
 ];

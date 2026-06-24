@@ -104,6 +104,24 @@ function RecruiterBuildDetail({ p }: { p: Project }) {
         </div>
       </header>
 
+      {/* Main Project Image / Video */}
+      {p.image && (
+        <div className="w-full h-[300px] md:h-[450px] bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden shadow-lg relative flex items-center justify-center">
+          {p.image.endsWith(".mp4") ? (
+            <video
+              src={p.image}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
+          )}
+        </div>
+      )}
+
       {/* Main Layout Grid */}
       <div className="grid gap-8 lg:grid-cols-[1fr_300px]">
         {/* Left Column - Details & Demos */}
@@ -249,14 +267,32 @@ function BuildDetail() {
         </div>
       </header>
 
-      {/* Main Image / Video Placeholder */}
+      {/* Main Image / Video Display */}
       <div className="mt-6 w-full h-[300px] md:h-[450px] pixel-border pixel-bevel bg-stone/20 relative overflow-hidden flex items-center justify-center">
-        <div className="absolute inset-0 section-gradient opacity-50" />
-        <div className="z-10 text-center">
-          <ProjectIcon variant={p.icon} size={120} className="mx-auto mb-4 opacity-50" />
-          <div className="font-display text-sm text-on-dark-muted">Project Media Placeholder</div>
-          <div className="font-mono text-on-dark-muted mt-2 text-base">({p.image})</div>
-        </div>
+        <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,rgba(255,255,255,0.01)_10px,rgba(255,255,255,0.01)_20px)] z-10 pointer-events-none" />
+        {p.image ? (
+          p.image.endsWith(".mp4") ? (
+            <video
+              src={p.image}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover pixelated"
+            />
+          ) : (
+            <img
+              src={p.image}
+              alt={p.title}
+              className="absolute inset-0 w-full h-full object-cover pixelated"
+            />
+          )
+        ) : (
+          <div className="z-10 text-center">
+            <ProjectIcon variant={p.icon} size={120} className="mx-auto mb-4 opacity-50" />
+            <div className="font-display text-sm text-on-dark-muted">No Media Available</div>
+          </div>
+        )}
       </div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_300px]">

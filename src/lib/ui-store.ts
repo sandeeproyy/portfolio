@@ -19,6 +19,9 @@ type UIState = {
   visitorModeChosen: boolean;
   setViewMode: (mode: "game" | "simple") => void;
   resetModeChoice: () => void;
+  isTransitioning: boolean;
+  transitionTarget: "game" | "simple" | null;
+  transitionToMode: (mode: "game" | "simple") => void;
 };
 
 export const useUIStore = create<UIState>()(
@@ -48,6 +51,21 @@ export const useUIStore = create<UIState>()(
       visitorModeChosen: false,
       setViewMode: (mode) => set({ viewMode: mode, visitorModeChosen: true }),
       resetModeChoice: () => set({ visitorModeChosen: false }),
+      isTransitioning: false,
+      transitionTarget: null,
+      transitionToMode: (mode) => {
+        set({ isTransitioning: true, transitionTarget: mode });
+
+        // After doors close (450ms), toggle the mode under the hood
+        setTimeout(() => {
+          set({ viewMode: mode, visitorModeChosen: true, transitionTarget: null });
+        }, 450);
+
+        // After doors open (950ms), complete the transition state
+        setTimeout(() => {
+          set({ isTransitioning: false });
+        }, 950);
+      },
     }),
     {
       name: "view-mode-storage",

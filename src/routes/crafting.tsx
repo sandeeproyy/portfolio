@@ -150,7 +150,9 @@ function GameCraftingPage() {
               })}
             </div>
             <div className="font-display text-xl text-stone">→</div>
-            <div className="pixel-bevel-inset size-20 md:size-24 bg-obsidian/60 grid place-items-center">
+            <div
+              className={`pixel-bevel-inset size-20 md:size-24 bg-obsidian/60 grid place-items-center transition-all duration-300 ${match ? "shadow-[0_0_25px_#5cd6ff] border border-diamond bg-obsidian" : ""}`}
+            >
               {match ? (
                 <ItemTooltip title={match.output.name} subtitle="Crafted Output">
                   <span className="size-14 md:size-16 pixel-border bg-diamond grid place-items-center text-center anim-block-pop">

@@ -11,15 +11,23 @@ export function ProjectCard({ project: p }: Props) {
     <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden flex flex-col h-full font-sans transition-all duration-300 hover:border-zinc-700 hover:shadow-lg">
       {/* Thumbnail placeholder or image */}
       <div className="h-48 bg-zinc-950 relative flex items-center justify-center overflow-hidden border-b border-zinc-800 group">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 to-zinc-950/20 group-hover:opacity-80 transition-opacity" />
-        {/* Dynamic icon indicator */}
-        <div className="text-zinc-500 opacity-60 group-hover:scale-110 group-hover:text-blue-400 transition-all duration-300">
-          {p.icon === "drone" && <Plane size={44} className="stroke-[1.5]" />}
-          {p.icon === "arm" && <Cpu size={44} className="stroke-[1.5]" />}
-          {p.icon === "ipmc" && <Activity size={44} className="stroke-[1.5]" />}
-          {p.icon === "solar" && <Sun size={44} className="stroke-[1.5]" />}
-          {p.icon === "locked" && <Lock size={44} className="stroke-[1.5]" />}
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 to-zinc-950/20 group-hover:opacity-60 transition-opacity z-10" />
+        {p.image ? (
+          <img
+            src={p.image}
+            alt={p.title}
+            className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-100 group-hover:scale-105"
+          />
+        ) : (
+          /* Dynamic icon indicator */
+          <div className="text-zinc-500 opacity-60 group-hover:scale-110 group-hover:text-blue-400 transition-all duration-300 z-10">
+            {p.icon === "drone" && <Plane size={44} className="stroke-[1.5]" />}
+            {p.icon === "arm" && <Cpu size={44} className="stroke-[1.5]" />}
+            {p.icon === "ipmc" && <Activity size={44} className="stroke-[1.5]" />}
+            {p.icon === "solar" && <Sun size={44} className="stroke-[1.5]" />}
+            {p.icon === "locked" && <Lock size={44} className="stroke-[1.5]" />}
+          </div>
+        )}
       </div>
 
       <div className="p-6 flex flex-col flex-1">
