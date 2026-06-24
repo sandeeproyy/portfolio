@@ -143,19 +143,20 @@ export default function Hero() {
   return (
     <Canvas
       shadows
-      camera={{ position: [12, 6, 12], fov: 40 }}
+      camera={{ position: [17, 8, 17], fov: 40 }}
       dpr={[1, 1.5]}
       style={{ width: "100%", height: "100%" }}
+      gl={{ alpha: true }}
     >
-      <color attach="background" args={["#0a0e1a"]} />
-      <fog attach="fog" args={["#0a0e1a", 20, 45]} />
       <ambientLight intensity={0.35} />
       <directionalLight position={[8, 12, 6]} intensity={1.2} castShadow />
       <pointLight position={[0, 5, 0]} intensity={0.5} color="#5cd6ff" distance={15} />
       <Suspense fallback={null}>
-        <Island />
-        <FloatingDrone />
-        <Particles />
+        <group scale={0.7}>
+          <Island />
+          <FloatingDrone />
+          <Particles />
+        </group>
       </Suspense>
       <OrbitControls
         enablePan={false}

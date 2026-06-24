@@ -3,8 +3,6 @@ import { PixelCard } from "@/components/ui/PixelCard";
 import { experiences, education, certifications, positions } from "@/data/experience-data";
 import { useUIStore } from "@/lib/ui-store";
 import { Briefcase, GraduationCap, Award, Users } from "lucide-react";
-
-// Recruiter Mode imports
 import { SectionContainer } from "@/components/layout/SectionContainer";
 import { TimelineEntry } from "@/components/recruiter/TimelineEntry";
 
@@ -42,7 +40,6 @@ function RecruiterExperiencePage() {
         </p>
       </header>
 
-      {/* Work Experience */}
       <section className="space-y-6">
         <div className="flex items-center gap-3 border-b border-zinc-900 pb-3">
           <Briefcase size={20} className="text-blue-400" />
@@ -71,7 +68,6 @@ function RecruiterExperiencePage() {
         </div>
       </section>
 
-      {/* Education */}
       <section className="space-y-6">
         <div className="flex items-center gap-3 border-b border-zinc-900 pb-3">
           <GraduationCap size={20} className="text-blue-400" />
@@ -98,7 +94,6 @@ function RecruiterExperiencePage() {
         </div>
       </section>
 
-      {/* Certifications */}
       <section className="space-y-6">
         <div className="flex items-center gap-3 border-b border-zinc-900 pb-3">
           <Award size={20} className="text-blue-400" />
@@ -127,7 +122,6 @@ function RecruiterExperiencePage() {
         </div>
       </section>
 
-      {/* Positions of Responsibility */}
       <section className="space-y-6">
         <div className="flex items-center gap-3 border-b border-zinc-900 pb-3">
           <Users size={20} className="text-blue-400" />
@@ -178,7 +172,6 @@ function ExperiencePage() {
       </header>
 
       <div className="space-y-16">
-        {/* Work Experience */}
         <section className="anim-slide-up" style={{ animationDelay: "0.1s" }}>
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2 pixel-border bg-diamond">
@@ -231,7 +224,6 @@ function ExperiencePage() {
           </div>
         </section>
 
-        {/* Education */}
         <section className="anim-slide-up" style={{ animationDelay: "0.2s" }}>
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2 pixel-border bg-grass">
@@ -261,7 +253,6 @@ function ExperiencePage() {
           </div>
         </section>
 
-        {/* Certifications (The new "Enchantments") */}
         <section className="anim-slide-up" style={{ animationDelay: "0.3s" }}>
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2 pixel-border" style={{ backgroundColor: "#3c6bd6" }}>
@@ -324,7 +315,6 @@ function ExperiencePage() {
           </div>
         </section>
 
-        {/* Positions of Responsibility */}
         <section className="anim-slide-up" style={{ animationDelay: "0.4s" }}>
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2 pixel-border bg-redstone">

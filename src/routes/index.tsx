@@ -9,8 +9,6 @@ import { DayNightToggle } from "@/components/layout/DayNightToggle";
 import { projects } from "@/data/projects";
 import { playSound } from "@/lib/sound";
 import { useUIStore } from "@/lib/ui-store";
-
-// Recruiter Mode imports
 import { SectionContainer } from "@/components/layout/SectionContainer";
 import { MetricStat } from "@/components/recruiter/MetricStat";
 import { ProjectCard } from "@/components/recruiter/ProjectCard";
@@ -87,25 +85,11 @@ function ScrollIndicator() {
   );
 }
 
-const SPLASH_TEXTS = [
-  "ROS 2 is awesome!",
-  "Inverse Kinematics inside!",
-  "Powered by Coffee!",
-  "Now with 100% more blocks!",
-  "R² = 0.959 deep regressor!",
-  "Autonomous state estimation!",
-  "State-of-the-art prototyping!",
-  "Biocompatible acoustics!",
-  "Voxel particle engines!",
-  "Operator level V!",
-];
-
 function RecruiterSpawn() {
   const featured = projects.filter((p) => p.tier === "diamond");
 
   return (
     <div className="font-sans text-zinc-100 min-h-screen bg-zinc-950">
-      {/* ─── Hero ─── */}
       <SectionContainer className="pt-28 pb-16 md:pt-36 md:pb-24 grid md:grid-cols-2 gap-12 items-center">
         <div className="space-y-6">
           <span className="text-xs font-semibold tracking-wider text-zinc-500 uppercase block">
@@ -148,7 +132,6 @@ function RecruiterSpawn() {
         </div>
       </SectionContainer>
 
-      {/* ─── Stats Row ─── */}
       <div className="border-y border-zinc-900 bg-zinc-950/40 py-6">
         <SectionContainer className="py-0 md:py-0 flex flex-wrap justify-between gap-6 max-w-4xl">
           <div className="flex items-baseline gap-2">
@@ -170,7 +153,6 @@ function RecruiterSpawn() {
         </SectionContainer>
       </div>
 
-      {/* ─── About Section ─── */}
       <SectionContainer id="about" className="space-y-6">
         <h2 className="text-xl font-bold text-white tracking-tight">About Me</h2>
         <p className="text-zinc-400 text-sm leading-relaxed max-w-4xl">
@@ -197,7 +179,6 @@ function RecruiterSpawn() {
         </div>
       </SectionContainer>
 
-      {/* ─── Featured Builds ─── */}
       <SectionContainer className="space-y-8 border-t border-zinc-900/60">
         <div className="flex items-end justify-between">
           <div>
@@ -220,7 +201,6 @@ function RecruiterSpawn() {
         </div>
       </SectionContainer>
 
-      {/* ─── Core Pillars ─── */}
       <SectionContainer className="space-y-8 border-t border-zinc-900/60">
         <h2 className="text-xl font-bold text-white tracking-tight">Core Competencies</h2>
         <div className="grid gap-6 md:grid-cols-3">
@@ -248,8 +228,8 @@ function RecruiterSpawn() {
         </div>
       </SectionContainer>
 
-      <footer className="border-t border-zinc-900/60 bg-zinc-950 py-8 text-center text-zinc-500 text-xs font-medium">
-        © 2026 Sandeep Roy · Built with React 19, Tailwind v4 and TanStack Start
+      <footer className="border-t border-zinc-900/40 bg-zinc-950/80 py-6 text-center text-zinc-500 text-xs">
+        © 2026 Sandeep Roy
       </footer>
     </div>
   );
@@ -258,11 +238,6 @@ function RecruiterSpawn() {
 function GameSpawn() {
   const featured = projects.filter((p) => p.tier === "diamond");
   const { triggerToast } = useUIStore();
-  const [splash, setSplash] = useState("");
-
-  useEffect(() => {
-    setSplash(SPLASH_TEXTS[Math.floor(Math.random() * SPLASH_TEXTS.length)]);
-  }, []);
 
   function handleViewResume() {
     playSound("levelup");
@@ -271,33 +246,16 @@ function GameSpawn() {
 
   return (
     <main>
-      {/* ─── Hero ─── */}
-      <section className="relative min-h-[90vh] overflow-hidden">
-        {/* 3D background */}
-        <div className="absolute inset-0">
-          <ClientOnly fallback={<div className="size-full bg-[#0a0e1a]" />}>
-            <Hero />
-          </ClientOnly>
-        </div>
-
-        {/* Gradient overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0a0e1a]/80 pointer-events-none" />
-
-        {/* Hero text overlay */}
-        <div className="relative z-10 mx-auto max-w-5xl px-4 pt-24 md:pt-32 pb-8 pointer-events-none">
-          <div className="pointer-events-auto">
-            {/* Name badge with backdrop blur and fixed splash position to prevent overlap */}
-            <div className="inline-block pixel-border pixel-bevel bg-obsidian/85 backdrop-blur-md px-5 py-4 anim-slide-up relative">
+      <section className="relative min-h-[90vh] flex flex-col justify-center py-12 md:py-0 overflow-hidden">
+        <div className="relative z-10 mx-auto max-w-6xl w-full px-4 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          {/* Left Column: Text & Buttons */}
+          <div className="flex flex-col justify-center space-y-6">
+            <div className="inline-block pixel-border pixel-bevel bg-obsidian/85 backdrop-blur-md px-5 py-4 anim-slide-up relative self-start w-full sm:w-auto">
               <div className="font-display text-[10px] text-diamond text-shadow-pixel tracking-widest">
                 SPAWN POINT
               </div>
-              <h1 className="mt-3 font-display text-3xl md:text-5xl text-on-dark text-shadow-pixel leading-tight relative pr-12">
+              <h1 className="mt-3 font-display text-3xl md:text-5xl text-on-dark text-shadow-pixel leading-tight">
                 SANDEEP&nbsp;ROY
-                {splash && (
-                  <span className="absolute -top-3 -right-6 md:-right-8 font-display text-[8px] md:text-[10px] text-[#f6cf57] rotate-[-12deg] select-none scale-anim-bounce pointer-events-none drop-shadow-[0_2px_0_rgba(0,0,0,0.8)] z-20">
-                    {splash}
-                  </span>
-                )}
               </h1>
               <p className="mt-2 font-display text-[10px] md:text-xs text-on-dark-muted tracking-wider">
                 MECHANICAL ENGINEERING · ROBOTICS · AI / ML
@@ -307,11 +265,7 @@ function GameSpawn() {
               </div>
             </div>
 
-            {/* CTA buttons */}
-            <div
-              className="mt-6 flex flex-wrap gap-3 anim-slide-up"
-              style={{ animationDelay: "0.15s" }}
-            >
+            <div className="flex flex-wrap gap-3 anim-slide-up" style={{ animationDelay: "0.15s" }}>
               <Link to="/builds">
                 <PixelButton variant="diamond">View Builds</PixelButton>
               </Link>
@@ -328,11 +282,7 @@ function GameSpawn() {
               </Link>
             </div>
 
-            {/* Stats row */}
-            <div
-              className="mt-8 flex flex-wrap gap-4 anim-slide-up"
-              style={{ animationDelay: "0.3s" }}
-            >
+            <div className="flex flex-wrap gap-4 anim-slide-up" style={{ animationDelay: "0.3s" }}>
               {STATS.map((s, idx) => (
                 <div
                   key={s.label}
@@ -351,12 +301,21 @@ function GameSpawn() {
               ))}
             </div>
           </div>
+
+          {/* Right Column: Voxel Island Model */}
+          <div
+            className="h-[350px] sm:h-[450px] md:h-[600px] w-full relative z-10 anim-slide-up"
+            style={{ animationDelay: "0.2s" }}
+          >
+            <ClientOnly fallback={<div className="size-full bg-[#0a0e1a]" />}>
+              <Hero />
+            </ClientOnly>
+          </div>
         </div>
 
         <ScrollIndicator />
       </section>
 
-      {/* ─── About ─── */}
       <section className="section-gradient py-16 md:py-20">
         <div className="mx-auto max-w-5xl px-4 anim-slide-up">
           <div className="font-display text-[10px] text-diamond text-shadow-pixel tracking-widest">
@@ -395,7 +354,6 @@ function GameSpawn() {
         </div>
       </section>
 
-      {/* ─── Featured Builds ─── */}
       <section className="section-gradient-alt py-16 md:py-20">
         <div className="mx-auto max-w-6xl px-4">
           <div className="mb-8 flex items-end justify-between flex-wrap gap-4">
@@ -427,7 +385,6 @@ function GameSpawn() {
                   tone="stone"
                   className="p-0 overflow-hidden transition-transform hover:-translate-y-1"
                 >
-                  {/* Image placeholder or actual image */}
                   <div className="h-40 bg-gradient-to-br from-obsidian/80 to-stone/60 flex items-center justify-center relative overflow-hidden">
                     <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,oklch(0.78_0.14_200/0.05)_10px,oklch(0.78_0.14_200/0.05)_20px)] z-10 pointer-events-none" />
                     {p.image ? (
@@ -480,7 +437,6 @@ function GameSpawn() {
         </div>
       </section>
 
-      {/* ─── Three Pillars ─── */}
       <section className="section-gradient py-16 md:py-20">
         <div className="mx-auto max-w-6xl px-4">
           <h2 className="font-display text-xl md:text-2xl text-foreground text-shadow-pixel">
@@ -516,14 +472,11 @@ function GameSpawn() {
         </div>
       </section>
 
-      <footer className="border-t-2 border-obsidian/60 bg-obsidian/60 py-6 text-center">
-        <div
-          className="font-hud text-stone"
-          style={{ fontFamily: "var(--font-hud)", fontSize: 16 }}
-        >
-          © 2026 Sandeep Roy · Built with blocks and bytes · Minecraft-inspired (unaffiliated with
-          Mojang/Microsoft)
-        </div>
+      <footer
+        className="border-t border-obsidian/40 bg-obsidian/30 py-6 text-center font-hud text-stone/60 text-base"
+        style={{ fontFamily: "var(--font-hud)" }}
+      >
+        © 2026 Sandeep Roy
       </footer>
     </main>
   );

@@ -5,8 +5,6 @@ import { ItemTooltip } from "@/components/ui/ItemTooltip";
 import { ingredients, matchRecipe, type Ingredient } from "@/data/skills";
 import { playSound } from "@/lib/sound";
 import { useUIStore } from "@/lib/ui-store";
-
-// Recruiter Mode imports
 import { SectionContainer } from "@/components/layout/SectionContainer";
 
 export const Route = createFileRoute("/crafting")({
@@ -116,7 +114,6 @@ function GameCraftingPage() {
         className="grid gap-6 lg:grid-cols-[auto_1fr] anim-slide-up"
         style={{ animationDelay: "0.15s" }}
       >
-        {/* Crafting table */}
         <div className="pixel-border pixel-bevel bg-wood/85 p-3 inline-block self-start">
           <div className="flex items-center gap-3">
             <div className="grid grid-cols-3 gap-2">
@@ -197,7 +194,6 @@ function GameCraftingPage() {
           </div>
         </div>
 
-        {/* Inventory */}
         <PixelCard tone="obsidian" className="p-4">
           <div className="font-display text-[10px] text-gold-mc text-shadow-pixel mb-3">
             INVENTORY · {picked ? `selected: ${picked.name}` : "pick an ingredient"}
@@ -228,7 +224,6 @@ function GameCraftingPage() {
         </PixelCard>
       </div>
 
-      {/* SR fallback */}
       <section className="sr-only">
         <h2>All skills</h2>
         <ul>

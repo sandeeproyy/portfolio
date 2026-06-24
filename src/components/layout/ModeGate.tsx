@@ -13,7 +13,6 @@ export function ModeGate() {
 
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-zinc-950 px-4 overflow-hidden">
-      {/* Decorative blurred background lighting orbs */}
       <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-blue-900/10 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[350px] h-[350px] bg-emerald-900/10 rounded-full blur-[100px] pointer-events-none" />
 
@@ -37,7 +36,6 @@ export function ModeGate() {
         </header>
 
         <div className="grid gap-6 sm:grid-cols-2">
-          {/* Creative Interactive Mode */}
           <button
             onClick={() => selectMode("game")}
             className="flex flex-col items-start justify-between p-6 bg-zinc-950/40 hover:bg-zinc-950/80 border border-zinc-800/80 hover:border-emerald-500/30 transition-all rounded-xl group text-left cursor-pointer h-full relative overflow-hidden"
@@ -64,7 +62,6 @@ export function ModeGate() {
             </div>
           </button>
 
-          {/* Professional Minimalist Mode */}
           <button
             onClick={() => selectMode("simple")}
             className="flex flex-col items-start justify-between p-6 bg-zinc-950/40 hover:bg-zinc-950/80 border border-zinc-800/80 hover:border-blue-500/30 transition-all rounded-xl group text-left cursor-pointer h-full relative overflow-hidden"

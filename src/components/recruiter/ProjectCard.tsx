@@ -9,7 +9,6 @@ type Props = {
 export function ProjectCard({ project: p }: Props) {
   return (
     <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden flex flex-col h-full font-sans transition-all duration-300 hover:border-zinc-700 hover:shadow-lg">
-      {/* Thumbnail placeholder or image */}
       <div className="h-48 bg-zinc-950 relative flex items-center justify-center overflow-hidden border-b border-zinc-800 group">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 to-zinc-950/20 group-hover:opacity-60 transition-opacity z-10" />
         {p.image ? (
@@ -19,7 +18,6 @@ export function ProjectCard({ project: p }: Props) {
             className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-100 group-hover:scale-105"
           />
         ) : (
-          /* Dynamic icon indicator */
           <div className="text-zinc-500 opacity-60 group-hover:scale-110 group-hover:text-blue-400 transition-all duration-300 z-10">
             {p.icon === "drone" && <Plane size={44} className="stroke-[1.5]" />}
             {p.icon === "arm" && <Cpu size={44} className="stroke-[1.5]" />}
@@ -31,7 +29,6 @@ export function ProjectCard({ project: p }: Props) {
       </div>
 
       <div className="p-6 flex flex-col flex-1">
-        {/* Meta Row */}
         <div className="flex items-center justify-between mb-2">
           <span className="text-xs font-semibold tracking-wider text-blue-400 uppercase">
             {p.tier} tier
@@ -39,13 +36,10 @@ export function ProjectCard({ project: p }: Props) {
           <span className="text-xs text-zinc-500 font-medium">{p.year}</span>
         </div>
 
-        {/* Title */}
         <h3 className="text-lg font-bold text-white mb-2 tracking-tight">{p.title}</h3>
 
-        {/* Tagline */}
         <p className="text-zinc-400 text-sm mb-6 flex-1 leading-relaxed">{p.tagline}</p>
 
-        {/* Tech Stack Pills */}
         <div className="flex flex-wrap gap-1.5 mb-6">
           {p.stack.slice(0, 4).map((s) => (
             <span
@@ -62,7 +56,6 @@ export function ProjectCard({ project: p }: Props) {
           )}
         </div>
 
-        {/* Action Links */}
         <div className="flex items-center justify-between pt-4 border-t border-zinc-800/80">
           {p.github ? (
             <a

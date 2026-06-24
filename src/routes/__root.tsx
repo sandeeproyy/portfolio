@@ -157,7 +157,6 @@ function RootComponent() {
         }
         data-mode={viewMode}
       >
-        {/* Global Floating Header for Game Mode */}
         {visitorModeChosen && viewMode === "game" && (
           <div className="fixed top-4 right-4 z-[100] flex items-center gap-2 pointer-events-auto">
             <DayNightToggle />
@@ -194,11 +193,9 @@ function RootComponent() {
         </>
       )}
 
-      {/* Screen-Wipe Portal Transition Door Overlay */}
       <AnimatePresence>
         {isTransitioning && (
           <div className="fixed inset-0 z-[999999] pointer-events-none">
-            {/* Left Door */}
             <motion.div
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
@@ -210,7 +207,6 @@ function RootComponent() {
               <div className="w-1.5 h-24 bg-zinc-800 rounded-full opacity-20" />
             </motion.div>
 
-            {/* Right Door */}
             <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
@@ -222,7 +218,6 @@ function RootComponent() {
               <div className="w-1.5 h-24 bg-zinc-800 rounded-full opacity-20" />
             </motion.div>
 
-            {/* Glowing energy line in the middle */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: [0, 1, 1, 0] }}

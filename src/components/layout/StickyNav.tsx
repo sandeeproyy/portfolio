@@ -12,7 +12,6 @@ export function StickyNav() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-[49] bg-zinc-950/85 backdrop-blur-md border-b border-zinc-800 text-zinc-100 py-3 px-6 flex justify-between items-center font-sans">
-      {/* Brand Logo */}
       <Link
         to="/"
         className="text-lg font-bold tracking-tight text-white hover:text-blue-400 transition-colors"
@@ -20,7 +19,6 @@ export function StickyNav() {
         Sandeep Roy
       </Link>
 
-      {/* Center Links */}
       <div className="hidden md:flex items-center gap-6 text-sm font-medium">
         <Link
           to="/"
@@ -55,9 +53,7 @@ export function StickyNav() {
         </Link>
       </div>
 
-      {/* Mode Switcher and Resume CTA */}
       <div className="flex items-center gap-4">
-        {/* Toggle Controls */}
         <div className="flex rounded-lg bg-zinc-900 border border-zinc-800 p-0.5 text-xs font-semibold relative">
           <button
             onClick={() => toggleMode("game")}
@@ -81,7 +77,6 @@ export function StickyNav() {
           </button>
         </div>
 
-        {/* Resume Download */}
         <a
           href="/resume.pdf"
           target="_blank"

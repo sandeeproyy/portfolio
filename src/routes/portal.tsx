@@ -5,8 +5,6 @@ import { PixelButton } from "@/components/ui/PixelButton";
 import { useUIStore } from "@/lib/ui-store";
 import { playSound } from "@/lib/sound";
 import { Mail, Github, Linkedin, FileText, Check, Copy } from "lucide-react";
-
-// Recruiter Mode imports
 import { SectionContainer } from "@/components/layout/SectionContainer";
 
 const LINKS = [
@@ -74,7 +72,6 @@ function RecruiterPortalPage() {
         </p>
       </header>
 
-      {/* Main Form/Grid */}
       <div className="grid gap-6 sm:grid-cols-2">
         {LINKS.map((link) => {
           const Icon = link.icon;
@@ -99,7 +96,6 @@ function RecruiterPortalPage() {
         })}
       </div>
 
-      {/* Command-style Copy Widget */}
       <div className="bg-zinc-950 border border-zinc-850 p-4 rounded-xl flex items-center justify-between gap-4 flex-wrap">
         <div className="flex items-center gap-2 text-zinc-300 text-xs md:text-sm font-mono">
           <span className="text-zinc-500 font-bold select-none">&gt;</span>
@@ -149,13 +145,11 @@ function GamePortalPage() {
         </p>
       </header>
 
-      {/* Portal */}
       <div
         className="mx-auto w-fit pixel-border pixel-bevel bg-obsidian p-3 anim-slide-up"
         style={{ animationDelay: "0.15s" }}
       >
         <div className="relative grid grid-cols-4 grid-rows-5" style={{ width: 280, height: 350 }}>
-          {/* frame */}
           {Array.from({ length: 4 * 5 }).map((_, i) => {
             const r = Math.floor(i / 4);
             const c = i % 4;
@@ -168,7 +162,6 @@ function GamePortalPage() {
               />
             );
           })}
-          {/* portal swirl */}
           <div
             className="absolute top-[70px] left-[70px] w-[140px] h-[210px] anim-bob"
             style={{
@@ -180,7 +173,6 @@ function GamePortalPage() {
         </div>
       </div>
 
-      {/* Sign posts */}
       <div
         className="mt-10 grid gap-4 sm:grid-cols-2 anim-slide-up"
         style={{ animationDelay: "0.3s" }}
@@ -219,7 +211,6 @@ function GamePortalPage() {
         ))}
       </div>
 
-      {/* Console-style mail line */}
       <div
         className="mt-8 pixel-border pixel-bevel bg-black/70 p-3 flex items-center gap-3 flex-wrap anim-slide-up"
         style={{ animationDelay: "0.45s" }}

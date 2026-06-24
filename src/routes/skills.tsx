@@ -7,8 +7,6 @@ import { useUIStore } from "@/lib/ui-store";
 import { playSound } from "@/lib/sound";
 import { Boxes, Terminal, BrainCircuit, Eye, Bot, Wrench } from "lucide-react";
 import { TechIcon } from "@/components/ui/TechIcon";
-
-// Recruiter Mode imports
 import { SectionContainer } from "@/components/layout/SectionContainer";
 import { ProjectCard } from "@/components/recruiter/ProjectCard";
 
@@ -102,7 +100,6 @@ function RecruiterSkillsPage() {
         </p>
       </header>
 
-      {/* Skills Grid */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {skillsData.map((category) => {
           const Icon = iconMap[category.icon] || Boxes;
@@ -111,7 +108,6 @@ function RecruiterSkillsPage() {
               key={category.name}
               className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl flex flex-col space-y-6"
             >
-              {/* Category Header */}
               <div className="flex items-center gap-3">
                 <div
                   className="p-2.5 rounded-lg text-zinc-950 text-sm font-bold bg-zinc-800/80"
@@ -122,7 +118,6 @@ function RecruiterSkillsPage() {
                 <h3 className="text-base font-bold text-white tracking-tight">{category.name}</h3>
               </div>
 
-              {/* Skills list */}
               <ul className="space-y-4 flex-1">
                 {category.skills.map((skill) => {
                   const isSelected = selectedSkill === skill.name;
@@ -157,7 +152,6 @@ function RecruiterSkillsPage() {
         })}
       </div>
 
-      {/* Skills to Projects Cross-Reference section */}
       <div className="border-t border-zinc-900 pt-10 space-y-6">
         <div>
           <h3 className="text-xl font-bold text-white tracking-tight">Skills to Projects Finder</h3>
@@ -216,7 +210,6 @@ function GameSkillsPage() {
         </p>
       </header>
 
-      {/* Floating Skills Visualization (Desktop Only) */}
       <div
         ref={containerRef}
         className="hidden md:block relative h-64 mb-12 pixel-border pixel-bevel overflow-hidden section-gradient"
@@ -239,7 +232,6 @@ function GameSkillsPage() {
         </div>
       </div>
 
-      {/* Skills Grid */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {skillsData.map((category, idx) => {
           const Icon = iconMap[category.icon] || Boxes;
@@ -266,7 +258,6 @@ function GameSkillsPage() {
                       <TechIcon name={skill.name} size={16} className="text-white shrink-0" />
                       <span>{skill.name}</span>
                     </div>
-                    {/* Minecraft-style progress bar */}
                     <div className="h-2 w-full bg-black/50 pixel-border border-b-0 border-r-0 border-l-0 overflow-hidden">
                       <div
                         className="h-full"

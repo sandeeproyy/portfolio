@@ -38,7 +38,6 @@ export function Hotbar() {
   const router = useRouter();
   const location = useLocation();
 
-  // Sync active slot with route
   useEffect(() => {
     const slot = HOTBAR_SLOTS.find((s) => {
       if (s.path === "/") return location.pathname === "/";
@@ -47,12 +46,10 @@ export function Hotbar() {
     if (slot) setActiveHotbarSlot(slot.id);
   }, [location.pathname, setActiveHotbarSlot]);
 
-  // Keyboard navigation (1-9 to select slot)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (viewMode === "simple") return;
 
-      // Don't hijack if typing in an input/textarea
       if (
         document.activeElement?.tagName === "INPUT" ||
         document.activeElement?.tagName === "TEXTAREA"
@@ -77,7 +74,6 @@ export function Hotbar() {
           }
         }
       } else if (e.key === "/") {
-        // quick toggle console
         e.preventDefault();
         toggleConsole();
         setActiveHotbarSlot(8);
@@ -90,7 +86,6 @@ export function Hotbar() {
 
   return (
     <div className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2">
-      {/* Label showing current hovered/active item */}
       <div className="mb-2 text-center h-5">
         <span className="font-display text-[10px] text-shadow-pixel text-on-dark drop-shadow-md transition-all duration-200">
           {HOTBAR_SLOTS[activeHotbarSlot]?.label}
@@ -130,7 +125,6 @@ export function Hotbar() {
                 transition-all duration-200`}
               onMouseEnter={() => !isActive && setActiveHotbarSlot(i)}
             >
-              {/* Item Icon */}
               {Icon ? (
                 <Icon
                   size={20}
@@ -144,7 +138,6 @@ export function Hotbar() {
                 />
               ) : null}
 
-              {/* Slot number hint */}
               <span
                 className="absolute bottom-0.5 right-1 font-hud text-[9px] text-on-dark-muted/30 pointer-events-none"
                 style={{ fontFamily: "var(--font-hud)" }}

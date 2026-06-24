@@ -9,8 +9,6 @@ import { projects, type Project } from "@/data/projects";
 import { useUIStore } from "@/lib/ui-store";
 import { Github, ExternalLink, ArrowLeft, Plane, Cpu, Activity, Sun, Lock } from "lucide-react";
 import { TechIcon } from "@/components/ui/TechIcon";
-
-// Recruiter Mode imports
 import { SectionContainer } from "@/components/layout/SectionContainer";
 
 const ArmIK = lazy(() => import("@/components/demos/ArmIK"));
@@ -55,7 +53,6 @@ export const Route = createFileRoute("/builds/$slug")({
 function RecruiterBuildDetail({ p }: { p: Project }) {
   return (
     <SectionContainer className="pt-24 space-y-10">
-      {/* Back link */}
       <div>
         <Link
           to="/builds"
@@ -66,7 +63,6 @@ function RecruiterBuildDetail({ p }: { p: Project }) {
         </Link>
       </div>
 
-      {/* Header Panel */}
       <header className="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl flex flex-col md:flex-row gap-6 md:items-center">
         <div className="bg-zinc-950 p-4 rounded-xl border border-zinc-800 shrink-0 self-start text-zinc-400 flex items-center justify-center">
           {p.icon === "drone" && <Plane size={36} className="stroke-[1.5] text-blue-400" />}
@@ -104,7 +100,6 @@ function RecruiterBuildDetail({ p }: { p: Project }) {
         </div>
       </header>
 
-      {/* Main Project Image / Video */}
       {p.image && (
         <div className="w-full h-[300px] md:h-[450px] bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden shadow-lg relative flex items-center justify-center">
           {p.image.endsWith(".mp4") ? (
@@ -122,9 +117,7 @@ function RecruiterBuildDetail({ p }: { p: Project }) {
         </div>
       )}
 
-      {/* Main Layout Grid */}
       <div className="grid gap-8 lg:grid-cols-[1fr_300px]">
-        {/* Left Column - Details & Demos */}
         <div className="space-y-8">
           {p.sections.map((s) => (
             <div
@@ -138,7 +131,6 @@ function RecruiterBuildDetail({ p }: { p: Project }) {
             </div>
           ))}
 
-          {/* Demos styled with recruiter wrap */}
           {p.demo === "arm-ik" && (
             <div className="space-y-4">
               <h3 className="text-lg font-bold text-white tracking-tight">
@@ -161,9 +153,7 @@ function RecruiterBuildDetail({ p }: { p: Project }) {
           )}
         </div>
 
-        {/* Right Column - Tech Stack & Stats */}
         <aside className="space-y-6">
-          {/* Tech Stack */}
           <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl space-y-4">
             <h3 className="text-sm font-bold text-white tracking-wider uppercase border-b border-zinc-800 pb-3">
               Technologies Used
@@ -184,7 +174,6 @@ function RecruiterBuildDetail({ p }: { p: Project }) {
             </ul>
           </div>
 
-          {/* Metrics */}
           <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl space-y-4">
             <h3 className="text-sm font-bold text-white tracking-wider uppercase border-b border-zinc-800 pb-3">
               Performance Indicators
@@ -267,7 +256,6 @@ function BuildDetail() {
         </div>
       </header>
 
-      {/* Main Image / Video Display */}
       <div className="mt-6 w-full h-[300px] md:h-[450px] pixel-border pixel-bevel bg-stone/20 relative overflow-hidden flex items-center justify-center">
         <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,rgba(255,255,255,0.01)_10px,rgba(255,255,255,0.01)_20px)] z-10 pointer-events-none" />
         {p.image ? (
@@ -334,7 +322,6 @@ function BuildDetail() {
           )}
         </div>
 
-        {/* Sidebar: tooltip-style enchantments + metrics */}
         <aside className="space-y-6">
           <PixelCard tone="obsidian" className="p-5">
             <div className="font-display text-[12px] text-diamond text-shadow-pixel mb-4 flex items-center gap-2">

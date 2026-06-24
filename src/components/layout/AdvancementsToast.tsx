@@ -28,17 +28,14 @@ export function AdvancementsToast() {
             "inset 2px 2px 0 0 rgba(255,255,255,0.15), inset -2px -2px 0 0 rgba(0,0,0,0.6), 8px 8px 0 0 rgba(0,0,0,0.4)",
         }}
       >
-        {/* Icon slot */}
         <div className="p-2 border-2 border-black bg-black/40 shrink-0">
           <Trophy size={20} className="text-[#f6cf57] anim-bob" />
         </div>
 
         <div className="flex-1">
-          {/* Gold MC Title */}
           <div className="font-display text-[9px] text-[#f6cf57] text-shadow-pixel tracking-wide select-none">
             Advancement Unlocked!
           </div>
-          {/* White HUD Description */}
           <div
             className="text-white text-base mt-1 select-none leading-none"
             style={{ fontFamily: "var(--font-hud)" }}

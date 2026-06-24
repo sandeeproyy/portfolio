@@ -2,8 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { advancements, type AdvancementNode } from "@/data/timeline";
 import { useUIStore } from "@/lib/ui-store";
-
-// Recruiter Mode imports
 import { SectionContainer } from "@/components/layout/SectionContainer";
 
 export const Route = createFileRoute("/advancements")({
@@ -80,7 +78,6 @@ function GameAdvancementsPage() {
     return () => io.disconnect();
   }, []);
 
-  // grid: 5 cols × 5 rows
   const COLS = 5;
   const ROWS = 5;
   const CELL = 160;
@@ -114,7 +111,6 @@ function GameAdvancementsPage() {
             backgroundColor: "#0d0f15",
           }}
         >
-          {/* connector lines */}
           <svg className="absolute inset-0 pointer-events-none" width={W} height={H}>
             {advancements.flatMap((n) =>
               (n.parents ?? []).map((pid) => {
@@ -183,7 +179,6 @@ function GameAdvancementsPage() {
         </div>
       </div>
 
-      {/* Detail panel */}
       {selected && (
         <div
           className="fixed inset-0 z-40 grid place-items-center bg-black/60 p-4"
@@ -218,7 +213,6 @@ function GameAdvancementsPage() {
         </div>
       )}
 
-      {/* SR fallback list */}
       <ol className="sr-only">
         {advancements.map((a) => (
           <li key={a.id}>

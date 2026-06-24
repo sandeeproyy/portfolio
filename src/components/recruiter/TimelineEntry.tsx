@@ -22,10 +22,8 @@ export function TimelineEntry({
 }: Props) {
   return (
     <div className="relative pl-8 pb-10 last:pb-0 border-l border-zinc-800 font-sans group">
-      {/* Circle indicator on left rule */}
       <div className="absolute left-0 top-1.5 -translate-x-1/2 w-3.5 h-3.5 rounded-full border-2 border-zinc-800 bg-zinc-950 group-hover:border-blue-500 transition-colors" />
 
-      {/* Header Info */}
       <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-1 mb-3">
         <div>
           <h3 className="text-base font-bold text-white tracking-tight">{title}</h3>
@@ -43,7 +41,6 @@ export function TimelineEntry({
         </div>
       </div>
 
-      {/* Bullet points */}
       {details.length > 0 && (
         <ul className="space-y-2 text-zinc-400 text-sm leading-relaxed mb-4 list-disc pl-4">
           {details.map((item, idx) => (
@@ -54,10 +51,8 @@ export function TimelineEntry({
         </ul>
       )}
 
-      {/* Extra contents / badges */}
       {extraContent}
 
-      {/* Verified credentials link */}
       {verifyUrl && (
         <a
           href={verifyUrl}

@@ -6,8 +6,6 @@ import { ItemTooltip } from "@/components/ui/ItemTooltip";
 import { projects } from "@/data/projects";
 import { useUIStore } from "@/lib/ui-store";
 import { Github } from "lucide-react";
-
-// Recruiter Mode imports
 import { SectionContainer } from "@/components/layout/SectionContainer";
 import { ProjectCard } from "@/components/recruiter/ProjectCard";
 
@@ -53,7 +51,6 @@ function RecruiterBuildsGallery() {
         </p>
       </header>
 
-      {/* Filter Buttons */}
       <div className="flex flex-wrap justify-center gap-2 border-b border-zinc-900 pb-6">
         {(["all", "robotics", "ml", "mechanical"] as const).map((tag) => (
           <button
@@ -70,7 +67,6 @@ function RecruiterBuildsGallery() {
         ))}
       </div>
 
-      {/* Grid */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {filtered.map((p) => (
           <ProjectCard key={p.slug} project={p} />
@@ -115,7 +111,6 @@ function BuildsGallery() {
               tone="stone"
               className="h-full flex flex-col p-0 overflow-hidden transition-transform hover:-translate-y-1"
             >
-              {/* Image placeholder or actual image */}
               <div className="h-48 bg-gradient-to-br from-obsidian/80 to-stone/60 flex items-center justify-center relative overflow-hidden shrink-0">
                 <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,oklch(0.78_0.14_200/0.05)_10px,oklch(0.78_0.14_200/0.05)_20px)] z-10 pointer-events-none" />
                 {p.image ? (
