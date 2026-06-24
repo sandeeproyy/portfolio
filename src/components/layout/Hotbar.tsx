@@ -1,6 +1,16 @@
 import { useEffect } from "react";
 import { Link, useRouter, useLocation } from "@tanstack/react-router";
-import { Home, Hammer, Cpu, Trophy, Grid3x3, Compass, DoorOpen, Terminal } from "lucide-react";
+import {
+  Home,
+  Hammer,
+  Cpu,
+  Trophy,
+  Grid3x3,
+  Compass,
+  DoorOpen,
+  Terminal,
+  Briefcase,
+} from "lucide-react";
 import { useUIStore } from "../../lib/ui-store";
 import { playSound } from "../../lib/sound";
 
@@ -12,7 +22,14 @@ const HOTBAR_SLOTS = [
   { id: 4, label: "Crafting", path: "/crafting", icon: Grid3x3, color: "#b8884b" },
   { id: 5, label: "Advancements", path: "/advancements", icon: Compass, color: "#f6cf57" },
   { id: 6, label: "Portal", path: "/portal", icon: DoorOpen, color: "#a23bd6" },
-  { id: 7, label: "", path: null, icon: null, color: null },
+  {
+    id: 7,
+    label: "Professional Mode",
+    path: null,
+    icon: Briefcase,
+    color: "#e2e2e2",
+    isModeToggle: true,
+  },
   { id: 8, label: "Console", path: null, icon: Terminal, color: "#3c6bd6", isConsole: true },
 ] as const;
 
@@ -52,6 +69,9 @@ export function Hotbar() {
           playSound("click");
           if (slot.isConsole) {
             toggleConsole();
+          } else if (slot.isModeToggle) {
+            useUIStore.getState().setViewMode("simple");
+            router.navigate({ to: "/" });
           } else if (slot.path) {
             router.navigate({ to: slot.path });
           }
@@ -89,6 +109,9 @@ export function Hotbar() {
                 playSound("click");
                 if (slot.isConsole) {
                   toggleConsole();
+                } else if (slot.isModeToggle) {
+                  useUIStore.getState().setViewMode("simple");
+                  router.navigate({ to: "/" });
                 } else if (slot.path) {
                   router.navigate({ to: slot.path });
                 }

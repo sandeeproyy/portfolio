@@ -11,6 +11,7 @@ const HELP = [
   "/tp crafting       — open crafting table",
   "/tp advancements   — open advancement tree",
   "/tp portal         — open contact portal",
+  "/tp recruiter      — switch to Recruiter Mode",
   "/give resume       — view resume PDF",
   "/whoami            — print operator info",
   "/help              — list commands",
@@ -62,7 +63,7 @@ export function CommandConsole() {
     if (head === "help") {
       setLog((l) => [...l, ...HELP]);
     } else if (head === "tp" || head === "give") {
-      const target = rest[0];
+      const target = rest[0]?.toLowerCase();
       const to = target ? ROUTES[target] : undefined;
       if (head === "give" && target === "resume") {
         setLog((l) => [...l, `[op] Opening item [Resume PDF] for player`]);
@@ -70,6 +71,20 @@ export function CommandConsole() {
         triggerToast("operator_resume.pdf Acquired", "Opened operator portfolio resume");
         window.open("/resume.pdf", "_blank");
         setTimeout(() => setConsoleOpen(false), 500);
+      } else if (target === "recruiter" || target === "simple" || target === "professional") {
+        setLog((l) => [...l, `[op] Switching to Recruiter Mode...`]);
+        playSound("portal");
+        triggerToast("Mode Shift", "Entering Professional Mode");
+        useUIStore.getState().setViewMode("simple");
+        navigate({ to: "/" });
+        setTimeout(() => setConsoleOpen(false), 250);
+      } else if (target === "game" || target === "interactive") {
+        setLog((l) => [...l, `[op] Switching to Game Mode...`]);
+        playSound("portal");
+        triggerToast("Mode Shift", "Entering Game Mode");
+        useUIStore.getState().setViewMode("game");
+        navigate({ to: "/" });
+        setTimeout(() => setConsoleOpen(false), 250);
       } else if (to) {
         setLog((l) => [...l, `[op] Teleporting → ${to}`]);
         playSound("portal");
