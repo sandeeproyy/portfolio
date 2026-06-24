@@ -7,7 +7,8 @@ import { HeartRow } from "@/components/ui/HeartRow";
 import { ItemTooltip } from "@/components/ui/ItemTooltip";
 import { projects, type Project } from "@/data/projects";
 import { useUIStore } from "@/lib/ui-store";
-import { Github, ExternalLink, ArrowLeft } from "lucide-react";
+import { Github, ExternalLink, ArrowLeft, Plane, Cpu, Activity, Sun, Lock } from "lucide-react";
+import { TechIcon } from "@/components/ui/TechIcon";
 
 // Recruiter Mode imports
 import { SectionContainer } from "@/components/layout/SectionContainer";
@@ -67,11 +68,12 @@ function RecruiterBuildDetail({ p }: { p: Project }) {
 
       {/* Header Panel */}
       <header className="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl flex flex-col md:flex-row gap-6 md:items-center">
-        <div className="bg-zinc-950 p-4 rounded-xl border border-zinc-800 shrink-0 self-start text-3xl">
-          {p.icon === "drone" && "🚁"}
-          {p.icon === "arm" && "🦾"}
-          {p.icon === "ipmc" && "🔬"}
-          {p.icon === "solar" && "☀️"}
+        <div className="bg-zinc-950 p-4 rounded-xl border border-zinc-800 shrink-0 self-start text-zinc-400 flex items-center justify-center">
+          {p.icon === "drone" && <Plane size={36} className="stroke-[1.5] text-blue-400" />}
+          {p.icon === "arm" && <Cpu size={36} className="stroke-[1.5] text-blue-400" />}
+          {p.icon === "ipmc" && <Activity size={36} className="stroke-[1.5] text-blue-400" />}
+          {p.icon === "solar" && <Sun size={36} className="stroke-[1.5] text-blue-400" />}
+          {p.icon === "locked" && <Lock size={36} className="stroke-[1.5] text-blue-400" />}
         </div>
         <div className="flex-1 space-y-3">
           <div className="flex items-center gap-3 flex-wrap">
@@ -154,7 +156,10 @@ function RecruiterBuildDetail({ p }: { p: Project }) {
                   key={s.name}
                   className="flex justify-between items-center border-b border-zinc-800/40 pb-2 last:border-0 last:pb-0"
                 >
-                  <span className="text-zinc-300 text-sm">{s.name}</span>
+                  <div className="flex items-center gap-2">
+                    <TechIcon name={s.name} size={16} className="shrink-0 text-zinc-400" />
+                    <span className="text-zinc-300 text-sm">{s.name}</span>
+                  </div>
                   <span className="text-xs font-semibold text-blue-400">Level {s.level}</span>
                 </li>
               ))}
@@ -305,7 +310,10 @@ function BuildDetail() {
                   key={s.name}
                   className="flex justify-between items-center border-b border-stone/30 pb-2 last:border-0 last:pb-0"
                 >
-                  <span className="text-on-dark">{s.name}</span>
+                  <div className="flex items-center gap-2">
+                    <TechIcon name={s.name} size={16} className="text-white shrink-0" />
+                    <span className="text-on-dark">{s.name}</span>
+                  </div>
                   <ItemTooltip title={`Level ${s.level}`}>
                     <span className="text-diamond font-display text-[10px]">LVL {s.level}</span>
                   </ItemTooltip>

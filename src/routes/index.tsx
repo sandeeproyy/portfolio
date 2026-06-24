@@ -106,22 +106,23 @@ function RecruiterSpawn() {
   return (
     <div className="font-sans text-zinc-100 min-h-screen bg-zinc-950">
       {/* ─── Hero ─── */}
-      <SectionContainer className="pt-24 pb-16 md:pt-32 md:pb-24 grid md:grid-cols-2 gap-12 items-center">
+      <SectionContainer className="pt-28 pb-16 md:pt-36 md:pb-24 grid md:grid-cols-2 gap-12 items-center">
         <div className="space-y-6">
-          <span className="text-xs font-bold tracking-wider text-blue-500 uppercase block">
-            Sandeep Roy · Mechanical Engineer & Robotics Developer
+          <span className="text-xs font-semibold tracking-wider text-zinc-500 uppercase block">
+            Sandeep Roy · Portfolio Profile
           </span>
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
-            Building autonomous systems that think, move, and learn.
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight font-sans">
+            Engineering Autonomous UAVs, Robotic Manipulators, & AI Control Loops
           </h1>
-          <p className="text-zinc-400 text-lg leading-relaxed">
-            Mechanical engineering undergraduate designing GPS-denied UAVs, FEA-verified 6-DOF
-            robotic arms, and deep neural networks for soft-actuator dynamics.
+          <p className="text-zinc-400 text-base leading-relaxed font-sans">
+            Mechanical Engineering undergraduate at Jorhat Engineering College specializing in
+            GPS-denied UAV state estimation, FEA-verified robotic arm manipulators, and data-driven
+            modeling of electroactive polymer actuators.
           </p>
           <div className="flex flex-wrap gap-4 pt-2">
             <Link
               to="/builds"
-              className="px-5 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm rounded-lg transition-colors cursor-pointer shadow"
+              className="px-5 py-2.5 bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-blue-400 hover:text-white font-semibold text-xs rounded-lg transition-all cursor-pointer shadow-sm"
             >
               Explore Builds
             </Link>
@@ -129,7 +130,7 @@ function RecruiterSpawn() {
               href="/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-5 py-3 border border-zinc-700 hover:border-zinc-500 text-white font-semibold text-sm rounded-lg transition-colors"
+              className="px-5 py-2.5 bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-zinc-300 hover:text-white font-semibold text-xs rounded-lg transition-all"
             >
               View CV
             </a>
@@ -137,7 +138,7 @@ function RecruiterSpawn() {
         </div>
 
         <div className="relative flex justify-center">
-          <div className="w-72 h-96 border border-zinc-800 rounded-2xl overflow-hidden shadow-2xl relative bg-zinc-900 flex items-center justify-center">
+          <div className="w-64 h-80 border border-zinc-800/80 rounded-2xl overflow-hidden shadow-2xl relative bg-zinc-900 flex items-center justify-center">
             <img
               src="/Project%20Images/Sandeep1.jpeg"
               alt="Sandeep Roy Profile Headshot"
@@ -148,25 +149,36 @@ function RecruiterSpawn() {
       </SectionContainer>
 
       {/* ─── Stats Row ─── */}
-      <div className="bg-zinc-900/40 border-y border-zinc-900 py-8">
-        <SectionContainer className="py-0 md:py-0 grid grid-cols-2 md:grid-cols-4 gap-6">
-          <MetricStat value="4+" label="Engineering Builds" />
-          <MetricStat value="3" label="R&D Internships" />
-          <MetricStat value="9" label="Technical Certs" />
-          <MetricStat value="4" label="Hackathon Wins" />
+      <div className="border-y border-zinc-900 bg-zinc-950/40 py-6">
+        <SectionContainer className="py-0 md:py-0 flex flex-wrap justify-between gap-6 max-w-4xl">
+          <div className="flex items-baseline gap-2">
+            <span className="text-xl font-bold text-white">4+</span>
+            <span className="text-xs text-zinc-500 font-medium">Engineering Builds</span>
+          </div>
+          <div className="flex items-baseline gap-2 border-l border-zinc-900 pl-6">
+            <span className="text-xl font-bold text-white">3</span>
+            <span className="text-xs text-zinc-500 font-medium">R&D Internships</span>
+          </div>
+          <div className="flex items-baseline gap-2 border-l border-zinc-900 pl-6">
+            <span className="text-xl font-bold text-white">9</span>
+            <span className="text-xs text-zinc-500 font-medium">Technical Certs</span>
+          </div>
+          <div className="flex items-baseline gap-2 border-l border-zinc-900 pl-6">
+            <span className="text-xl font-bold text-white">4</span>
+            <span className="text-xs text-zinc-500 font-medium">Hackathon Wins</span>
+          </div>
         </SectionContainer>
       </div>
 
       {/* ─── About Section ─── */}
       <SectionContainer id="about" className="space-y-6">
-        <h2 className="text-2xl font-bold text-white tracking-tight">About Me</h2>
-        <p className="text-zinc-400 text-base leading-relaxed max-w-4xl">
+        <h2 className="text-xl font-bold text-white tracking-tight">About Me</h2>
+        <p className="text-zinc-400 text-sm leading-relaxed max-w-4xl">
           I operate at the intersection of classical mechanical engineering and modern artificial
-          intelligence. A B.Tech candidate in Mechanical Engineering at Jorhat Engineering College,
-          I specialize in building embedded sensor fusion loops, implementing EKF and SLAM
-          perception loops on Jetson Nanos, and running dynamic FEA modeling for structurally sound
-          linkages. My work focuses on replacing generic models with real-world, instrumented
-          hardware validated by data.
+          intelligence. As a B.Tech candidate in Mechanical Engineering, my work focuses on
+          replacing generic models with real-world, instrumented hardware validated by data. I
+          specialize in building embedded sensor fusion loops, implementing EKF and SLAM perception
+          loops on Jetson Nanos, and running dynamic FEA modeling for structurally sound linkages.
         </p>
         <div className="flex flex-wrap gap-2 pt-2">
           {[
@@ -177,7 +189,7 @@ function RecruiterSpawn() {
           ].map((tag) => (
             <span
               key={tag}
-              className="text-xs bg-zinc-900 border border-zinc-800 text-blue-400 px-3.5 py-1.5 rounded-full font-medium"
+              className="text-[11px] bg-zinc-900 border border-zinc-800 text-blue-400 px-3.5 py-1.5 rounded-full font-medium"
             >
               {tag}
             </span>
@@ -186,17 +198,17 @@ function RecruiterSpawn() {
       </SectionContainer>
 
       {/* ─── Featured Builds ─── */}
-      <SectionContainer className="space-y-8 border-t border-zinc-900">
+      <SectionContainer className="space-y-8 border-t border-zinc-900/60">
         <div className="flex items-end justify-between">
           <div>
-            <h2 className="text-2xl font-bold text-white tracking-tight">Featured Projects</h2>
-            <p className="text-zinc-400 text-sm mt-1">
+            <h2 className="text-xl font-bold text-white tracking-tight">Featured Projects</h2>
+            <p className="text-zinc-400 text-xs mt-1">
               High-impact, tested systems in Robotics, ML, and CAD
             </p>
           </div>
           <Link
             to="/builds"
-            className="text-sm font-semibold text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1"
+            className="text-xs font-semibold text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1"
           >
             View All Builds →
           </Link>
@@ -209,26 +221,26 @@ function RecruiterSpawn() {
       </SectionContainer>
 
       {/* ─── Core Pillars ─── */}
-      <SectionContainer className="space-y-8 border-t border-zinc-900">
-        <h2 className="text-2xl font-bold text-white tracking-tight">Core Competencies</h2>
+      <SectionContainer className="space-y-8 border-t border-zinc-900/60">
+        <h2 className="text-xl font-bold text-white tracking-tight">Core Competencies</h2>
         <div className="grid gap-6 md:grid-cols-3">
-          <div className="p-6 bg-zinc-900 border border-zinc-800 rounded-xl space-y-3">
-            <div className="text-xl font-bold text-white">Mechanical Engineering</div>
-            <p className="text-zinc-400 text-sm leading-relaxed">
+          <div className="p-6 bg-zinc-950/40 border border-zinc-900 rounded-xl space-y-3">
+            <div className="text-sm font-bold text-white">Mechanical Engineering</div>
+            <p className="text-zinc-400 text-xs leading-relaxed">
               SolidWorks assembly modeling, structural FEA analysis in ANSYS, and Fusion 360
               manufacturing optimizations for additive manufacturing.
             </p>
           </div>
-          <div className="p-6 bg-zinc-900 border border-zinc-800 rounded-xl space-y-3">
-            <div className="text-xl font-bold text-white">Robotics & Controls</div>
-            <p className="text-zinc-400 text-sm leading-relaxed">
+          <div className="p-6 bg-zinc-950/40 border border-zinc-900 rounded-xl space-y-3">
+            <div className="text-sm font-bold text-white">Robotics & Controls</div>
+            <p className="text-zinc-400 text-xs leading-relaxed">
               ROS 2 middleware configurations, autonomous SLAM navigation loops (ORB-SLAM3), state
               estimation via EKF, and Arduino micro-controller integration.
             </p>
           </div>
-          <div className="p-6 bg-zinc-900 border border-zinc-800 rounded-xl space-y-3">
-            <div className="text-xl font-bold text-white">Data Science & AI</div>
-            <p className="text-zinc-400 text-sm leading-relaxed">
+          <div className="p-6 bg-zinc-950/40 border border-zinc-900 rounded-xl space-y-3">
+            <div className="text-sm font-bold text-white">Data Science & AI</div>
+            <p className="text-zinc-400 text-xs leading-relaxed">
               TensorFlow deep regression architectures, computer vision pipelines using OpenCV and
               MediaPipe, and experimental data preprocessing.
             </p>
@@ -236,7 +248,7 @@ function RecruiterSpawn() {
         </div>
       </SectionContainer>
 
-      <footer className="border-t border-zinc-900 bg-zinc-950 py-8 text-center text-zinc-500 text-xs font-medium">
+      <footer className="border-t border-zinc-900/60 bg-zinc-950 py-8 text-center text-zinc-500 text-xs font-medium">
         © 2026 Sandeep Roy · Built with React 19, Tailwind v4 and TanStack Start
       </footer>
     </div>
@@ -287,7 +299,7 @@ function GameSpawn() {
               <h1 className="mt-3 font-display text-3xl md:text-5xl text-on-dark text-shadow-pixel leading-tight relative pr-12">
                 SANDEEP&nbsp;ROY
                 {splash && (
-                  <span className="absolute -bottom-8 -right-6 md:-right-8 font-display text-[8px] md:text-[10px] text-[#f6cf57] rotate-[-12deg] select-none scale-anim-bounce pointer-events-none drop-shadow-[0_2px_0_rgba(0,0,0,0.8)] z-20">
+                  <span className="absolute -top-3 -right-6 md:-right-8 font-display text-[8px] md:text-[10px] text-[#f6cf57] rotate-[-12deg] select-none scale-anim-bounce pointer-events-none drop-shadow-[0_2px_0_rgba(0,0,0,0.8)] z-20">
                     {splash}
                   </span>
                 )}

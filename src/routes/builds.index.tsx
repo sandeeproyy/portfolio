@@ -61,7 +61,7 @@ function RecruiterBuildsGallery() {
             onClick={() => setFilter(tag)}
             className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all capitalize cursor-pointer ${
               filter === tag
-                ? "bg-blue-600 text-white shadow"
+                ? "bg-zinc-100 text-zinc-950 shadow-sm"
                 : "bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white"
             }`}
           >

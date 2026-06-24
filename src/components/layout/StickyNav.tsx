@@ -67,7 +67,7 @@ export function StickyNav() {
                 : "text-zinc-400 hover:text-zinc-200"
             }`}
           >
-            🎮 Game
+            Interactive
           </button>
           <button
             onClick={() => toggleMode("simple")}
@@ -77,7 +77,7 @@ export function StickyNav() {
                 : "text-zinc-400 hover:text-zinc-200"
             }`}
           >
-            💼 Recruiter
+            Professional
           </button>
         </div>
 

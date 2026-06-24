@@ -100,19 +100,19 @@ function RecruiterPortalPage() {
       </div>
 
       {/* Command-style Copy Widget */}
-      <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-xl flex items-center justify-between gap-4 flex-wrap">
-        <div className="flex items-center gap-2 text-zinc-300 text-sm font-mono">
-          <span className="text-blue-500 font-bold">&gt;</span>
-          <span>email sandeeproy4984@gmail.com</span>
+      <div className="bg-zinc-950 border border-zinc-850 p-4 rounded-xl flex items-center justify-between gap-4 flex-wrap">
+        <div className="flex items-center gap-2 text-zinc-300 text-xs md:text-sm font-mono">
+          <span className="text-zinc-500 font-bold select-none">&gt;</span>
+          <span className="text-zinc-400">sandeeproy4984@gmail.com</span>
         </div>
         <button
           onClick={copyEmail}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold cursor-pointer transition-colors shadow"
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-zinc-300 hover:text-white rounded-lg text-xs font-semibold cursor-pointer transition-all shadow-sm"
         >
           {copied ? (
             <>
-              <Check size={14} />
-              <span>Copied!</span>
+              <Check size={14} className="text-green-400" />
+              <span className="text-green-400">Copied!</span>
             </>
           ) : (
             <>

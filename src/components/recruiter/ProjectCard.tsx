@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Github, ArrowRight } from "lucide-react";
+import { Github, ArrowRight, Plane, Cpu, Activity, Sun, Lock } from "lucide-react";
 import { type Project } from "@/data/projects";
 
 type Props = {
@@ -13,13 +13,13 @@ export function ProjectCard({ project: p }: Props) {
       <div className="h-48 bg-zinc-950 relative flex items-center justify-center overflow-hidden border-b border-zinc-800 group">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 to-zinc-950/20 group-hover:opacity-80 transition-opacity" />
         {/* Dynamic icon indicator */}
-        <span className="text-4xl opacity-60 group-hover:scale-110 transition-transform duration-300">
-          {p.icon === "drone" && "🚁"}
-          {p.icon === "arm" && "🦾"}
-          {p.icon === "ipmc" && "🔬"}
-          {p.icon === "solar" && "☀️"}
-          {p.icon === "locked" && "🔒"}
-        </span>
+        <div className="text-zinc-500 opacity-60 group-hover:scale-110 group-hover:text-blue-400 transition-all duration-300">
+          {p.icon === "drone" && <Plane size={44} className="stroke-[1.5]" />}
+          {p.icon === "arm" && <Cpu size={44} className="stroke-[1.5]" />}
+          {p.icon === "ipmc" && <Activity size={44} className="stroke-[1.5]" />}
+          {p.icon === "solar" && <Sun size={44} className="stroke-[1.5]" />}
+          {p.icon === "locked" && <Lock size={44} className="stroke-[1.5]" />}
+        </div>
       </div>
 
       <div className="p-6 flex flex-col flex-1">

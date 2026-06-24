@@ -6,6 +6,7 @@ import { projects } from "@/data/projects";
 import { useUIStore } from "@/lib/ui-store";
 import { playSound } from "@/lib/sound";
 import { Boxes, Terminal, BrainCircuit, Eye, Bot, Wrench } from "lucide-react";
+import { TechIcon } from "@/components/ui/TechIcon";
 
 // Recruiter Mode imports
 import { SectionContainer } from "@/components/layout/SectionContainer";
@@ -54,16 +55,19 @@ function FloatingSkill({
       className="absolute anim-float-orbit"
       style={{
         animationDelay: `${delay}s`,
-        top: `${Math.random() * 80 + 10}%`,
+        top: `${Math.random() * 70 + 15}%`,
         left: `${Math.random() * 80 + 10}%`,
       }}
     >
       <div
-        className="pixel-border pixel-bevel px-2 py-1 text-xs whitespace-nowrap text-on-dark transition-transform hover:scale-110 cursor-default"
-        style={{ backgroundColor: `${color}80`, backdropFilter: "blur(4px)" }}
-        title={`Proficiency: ${skill.level}%`}
+        className="pixel-border pixel-bevel p-2 flex items-center justify-center transition-transform hover:scale-110 cursor-default group relative bg-obsidian/80 backdrop-blur-sm"
+        style={{ borderColor: color }}
+        title={`${skill.name}: ${skill.level}%`}
       >
-        {skill.name}
+        <TechIcon name={skill.name} size={32} className="text-white" />
+        <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 scale-0 group-hover:scale-100 transition-all bg-obsidian text-on-dark text-[10px] px-2 py-0.5 pixel-border whitespace-nowrap z-30 font-mono">
+          {skill.name} ({skill.level}%)
+        </span>
       </div>
     </div>
   );
@@ -127,13 +131,14 @@ function RecruiterSkillsPage() {
                       <div className="flex justify-between items-center text-sm font-medium">
                         <button
                           onClick={() => handleSkillClick(skill.name)}
-                          className={`text-left hover:text-blue-400 transition-colors font-semibold py-0.5 px-1.5 rounded text-xs cursor-pointer ${
+                          className={`flex items-center gap-2 text-left hover:text-blue-400 transition-colors font-semibold py-0.5 px-1.5 rounded text-xs cursor-pointer ${
                             isSelected
                               ? "bg-blue-600/20 text-blue-400 border border-blue-500/30"
                               : "text-zinc-300"
                           }`}
                         >
-                          {skill.name}
+                          <TechIcon name={skill.name} size={16} className="shrink-0" />
+                          <span>{skill.name}</span>
                         </button>
                         <span className="text-xs text-zinc-500 font-semibold">{skill.level}%</span>
                       </div>
@@ -257,7 +262,8 @@ function GameSkillsPage() {
               <ul className="space-y-3 flex-1 font-mono text-[14px]">
                 {category.skills.map((skill) => (
                   <li key={skill.name}>
-                    <div className="flex justify-between text-on-dark mb-1">
+                    <div className="flex items-center gap-2 text-on-dark mb-1">
+                      <TechIcon name={skill.name} size={16} className="text-white shrink-0" />
                       <span>{skill.name}</span>
                     </div>
                     {/* Minecraft-style progress bar */}
